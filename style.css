@@ -85,6 +85,46 @@ body {
 @import "partials/elements.headings";
 @import "partials/elements.text";
 */
+/** Component aggregator */
+/** Hero component */
+.hero {
+  position: relative;
+}
+.hero-img {
+  width: 100%;
+}
+.hero__show {
+  position: absolute;
+  top: 1vw;
+  right: 5%;
+  color: #ffffff;
+  font-size: 1.5vw;
+}
+.hero__upv {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  justify-content: space-between;
+  width: 90%;
+  display: flex;
+  color: #ffffff;
+}
+.hero__upv-statement {
+  width: 48%;
+}
+.hero__upv-statement h1 {
+  display: inline;
+}
+.hero__upv-logo {
+  width: 48%;
+  display: flex;
+  justify-content: flex-end;
+}
+.hero__upv-logo img {
+  width: 15vw;
+  height: 15vw;
+}
+
 /*
 @import "partials/components.header";
 @import "partials/components.footer";

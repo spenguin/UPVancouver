@@ -62,7 +62,7 @@ function upvancouver_setup()
 	add_theme_support(
 		'html5',
 		array(
-			'search-form',
+			// 'search-form',
 			'comment-form',
 			'comment-list',
 			'gallery',
@@ -136,7 +136,7 @@ function upvancouver_widgets_init()
 		)
 	);
 }
-add_action('widgets_init', 'upvancouver_widgets_init');
+// add_action('widgets_init', 'upvancouver_widgets_init');
 
 /**
  * Enqueue scripts and styles.

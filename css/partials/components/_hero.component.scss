@@ -1,0 +1,40 @@
+/** Hero component */
+
+.hero {
+    position: relative;
+    &-img {
+        width: 100%;
+    }
+    &__show {
+        position: absolute;
+        top: 1vw;
+        right: 5%;
+        color: $UPVWhite;
+        font-size: 1.5vw;
+    }
+    &__upv {
+        position: absolute;
+        top: 50%;
+        left: 5%;
+        justify-content: space-between;
+        width: 90%;
+        display: flex;
+        color: $UPVWhite;
+        &-statement {
+            width: 48%;
+            h1 {
+                display: inline;
+            }
+        }
+        &-logo {
+            width: 48%;
+            display: flex;
+            justify-content: flex-end;
+            img {
+                width: 15vw;
+                height: 15vw;
+            }
+        }
+    }
+
+}
