@@ -1,0 +1,16 @@
+/** Blocks styles */
+
+body {
+    background-color: $UPVGrey;
+}
+.footer {
+    background-color: $UPVDarkBlue;
+    padding: 3% 5% 3% 8%;
+    &-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    &__main {
+        width: 48%;
+    }
+}
