@@ -180,3 +180,6 @@ require get_template_directory() . '/inc/customizer.php';
 if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+/** Bespoke code */
+require get_template_directory() . '/inc/custom-posts.php';
+require get_template_directory() . '/inc/custom-settings.php';
