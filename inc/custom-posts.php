@@ -11,6 +11,8 @@ function initialize()
     add_action('init', '\CustomPosts\custom_post_type', 0);
     add_action('init', '\CustomPosts\custom_taxonomy_type', 0);
     add_action('admin_init', '\CustomPosts\admin_init');
+    add_action('save_post_show', '\CustomPosts\save_show_dates');
+    // add_action('save_post_performance', '\CustomPosts\create_performance', 10, 3);
 }
 
 function custom_post_type()
@@ -87,7 +89,7 @@ function custom_post_type()
         'description'         => __('Performances listings', 'upv'),
         'labels'              => $labels,
         // Features this CPT supports in Post Editor
-        'supports'            => array('title', 'editor', 'thumbnail', 'excerpt'),
+        'supports'            => array('title'),
         // You can associate this CPT with a taxonomy or custom taxonomy. 
         // 'taxonomies'          => array('seasons'),
         'rewrite' => array('slug' => 'performance', 'with_front' => false),
@@ -138,6 +140,8 @@ function custom_taxonomy_type()
 function admin_init()
 {
     add_meta_box('show_dates_meta', 'Show Dates &amp; Times', '\CustomPosts\show_dates', 'show');
+    add_meta_box('show_meta', 'Show Name', '\CustomPosts\showName', 'performance', 'side');
+    add_meta_box('performance_meta', 'Performance Details', '\CustomPosts\performanceDetails', 'performance', 'side');
 }
 
 
@@ -149,9 +153,116 @@ function show_dates()
     $end_date   = ($custom['end_date'][0]) ? $custom['end_date'][0] : '';
 ?>
     <label for="start_date">Start Date:</label>
-    <input type="date" name="start_date" value="<?php echo (empty($start_date) ? date('d/m/Y') : date('d/m/Y', $start_date)); ?>">
+    <input type="date" name="start_date" value="<?php echo $start_date; ?>" />
     <label for="end_date">End Date:</label>
-    <input type="date" name="end_date" value="<?php echo (empty($end_date) ? date('d/m/Y') : date('d/m/Y', $end_date)); ?>">
+    <input type="date" name="end_date" value="<?php echo $end_date; ?>" />
 
 <?php
+}
+
+function save_show_dates()
+{
+    global $post;
+    $custom     = get_post_custom($post->ID);
+    $start_date = $_POST['start_date'];
+    $end_date   = $_POST['end_date'];
+    $show_id    = $post->ID;
+
+    $p         = [];
+
+
+    if ($start_date != $custom['start_date'][0] || $end_date != $custom['end_date'][0]) {
+        // update_post_meta($post->ID, 'start_date', $start_date);
+        // update_post_meta($post->ID, 'end_date', $end_date);
+
+        // Since either the Start Date or the End Date have changed, we need to regenerate all the performance dates
+        // delete all posts that have something in a custom field
+        \CustomPosts\delete_performances($post->ID);
+
+        // Generate new performance dates
+        $options    = get_option('performance_options');
+        // var_dump($options);
+        $begin      = new \DateTime($start_date);
+        $end        = new \DateTime($end_date);
+        $interval   = new \DateInterval('P1D');
+        $daterange  = new \DatePeriod($begin, $interval, $end);
+
+        for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
+            $dateTime = $i->format('j M Y');
+            $dayofweek  = (date('w', strtotime($dateTime)) + 6) % 7;
+            if (isset($options["'m'"][$dayofweek])) {
+                \CustomPosts\create_performance($dateTime, $post->ID, $options['performance_field_matinee_starttime']);
+            }
+            if (isset($options["'e'"][$dayofweek])) {
+                \CustomPosts\create_performance($dateTime, $post->ID, $options['performance_field_evening_starttime']);
+            }
+        }
+    }
+}
+
+function showName()
+{
+    global $post;
+    $custom     = get_post_custom($post->ID);
+    $show_id    = $custom['show_id'][0] ? $custom['show_id'][0] : '';
+    $showPost   = get_post($show_id);
+?>
+    <p><?php echo $showPost->post_title; ?></p>
+<?php
+}
+
+function performanceDetails()
+{
+    global $post;
+    $custom             = get_post_custom($post->ID);
+    $performance_time   = $custom['performance_time'][0] ? $custom['performance_time'][0] : '';
+?>
+    <label for="performance_time">Performance Time:</label>
+    <input type="time" name="performance_time" value="<?php echo $performance_time; ?>" />
+
+<?php
+}
+
+function save_performance_time()
+{
+    global $post;
+    $performance_time   = $_POST['performance_time'];
+    update_post_meta($post->ID, 'performance_time', $performance_time);
+}
+
+
+function create_performance($date, $show_id, $time)
+{
+
+    $post_id = wp_insert_post(array(
+        'post_type' => 'performance',
+        'post_title' => $date,
+        'post_content' => '',
+        'post_status' => 'publish',
+        'comment_status' => 'closed',   // if you prefer
+        'ping_status' => 'closed',      // if you prefer
+    ));
+
+    if ($post_id) {
+        add_post_meta($post_id, 'show_id', $show_id);
+        add_post_meta($post_id, 'performance_time', $time);
+    }
+}
+
+function delete_performances($show_id)
+{
+    $args = array(
+        'posts_per_page'    => -1,
+        'post_type'         => 'performance',
+        // 'meta_key'          => 'show_id',
+        // 'meta_value'        => $show_id
+    );
+    $the_query = new WP_Query($args);
+    if ($the_query->have_posts()) {
+        while ($the_query->have_posts()) :
+            $the_query->the_post();
+            wp_delete_post(get_the_ID());
+        endwhile;
+    }
+    wp_reset_postdata();
 }
