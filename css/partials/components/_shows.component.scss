@@ -1,0 +1,67 @@
+/** Shows component styling */
+
+.shows {
+    h2 {
+        text-align: center;
+    }
+
+    &__wrapper {
+        width: 100%; //1200px;
+        // margin: 0 auto;
+    }
+    &__list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        &-show {
+            width: 98%;
+            margin: 0 auto;
+            position: relative;
+            a {
+                position: relative;
+                display: block;
+                overflow: hidden;
+                color: $UPVWhite;
+                text-align: center;
+                transition: transform 0.4s;
+                img {
+                    width: 100%;
+                }
+                .shows__list-info {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 0;
+                    background-color: $UPVBlack;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    opacity: 0;
+                    padding-top: 1rem;
+                    padding-bottom: 2rem;
+                }
+                h3 {
+                    margin-top: 0;
+                }
+                h4 {
+                    text-transform: uppercase;
+                    margin-bottom: 0;
+                }
+                &:hover {
+                    img {
+                        // transform: scale(1.8);
+                    }
+                    .shows__list-info {
+                        // width: 100%;
+                        // opacity: 1;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+
+}

@@ -13,6 +13,13 @@ if (!defined('_S_VERSION')) {
 	define('_S_VERSION', '1.0.0');
 }
 
+// Useful global constants
+define('CORE_URL', get_template_directory());
+define('CORE_INC', CORE_URL . '/inc');
+define('CORE_SHORTCODE', CORE_INC . '/shortcodes');
+
+require_once CORE_INC . '/shortcodes.php';
+
 /**
  * Sets up theme defaults and registers support for various WordPress features.
  *
@@ -62,7 +69,7 @@ function upvancouver_setup()
 	add_theme_support(
 		'html5',
 		array(
-			'search-form',
+			// 'search-form',
 			'comment-form',
 			'comment-list',
 			'gallery',
@@ -136,7 +143,7 @@ function upvancouver_widgets_init()
 		)
 	);
 }
-add_action('widgets_init', 'upvancouver_widgets_init');
+// add_action('widgets_init', 'upvancouver_widgets_init');
 
 /**
  * Enqueue scripts and styles.
@@ -180,3 +187,6 @@ require get_template_directory() . '/inc/customizer.php';
 if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+/** Bespoke code */
+require get_template_directory() . '/inc/custom-posts.php';
+require get_template_directory() . '/inc/custom-settings.php';

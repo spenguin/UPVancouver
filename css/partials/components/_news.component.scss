@@ -1,0 +1,26 @@
+/** News style */
+
+.news {
+    padding: 2rem 2%;
+    background-color: $UPVWhite;
+    &__article {
+        &--text {
+            color: $UPVGrey;
+            h2 {
+                text-transform: uppercase;
+                text-align: center;
+                line-height: 2.4rem;
+            }
+            p {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+        }
+        &--image{
+            img {
+                width: 100%;
+            } 
+        }
+
+    }
+}
