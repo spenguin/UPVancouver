@@ -170,7 +170,7 @@ function save_show_dates()
     $custom     = get_post_custom($post->ID);
     $start_date = $_POST['start_date'];
     $end_date   = $_POST['end_date'];
-    $show_id    = $post->ID;
+    $show_id    = (string) $post->ID;
 
     $p         = [];
 
@@ -195,10 +195,10 @@ function save_show_dates()
             $dateTime = $i->format('j M Y');
             $dayofweek  = (date('w', strtotime($dateTime)) + 6) % 7;
             if (isset($options["'m'"][$dayofweek])) {
-                \CustomPosts\create_performance($dateTime, $post->ID, $options['performance_field_matinee_starttime']);
+                \CustomPosts\create_performance($dateTime, $show_id, $options['performance_field_matinee_starttime']);
             }
             if (isset($options["'e'"][$dayofweek])) {
-                \CustomPosts\create_performance($dateTime, $post->ID, $options['performance_field_evening_starttime']);
+                \CustomPosts\create_performance($dateTime, $show_id, $options['performance_field_evening_starttime']);
             }
         }
     }
@@ -237,7 +237,6 @@ function save_performance_time()
 
 function create_performance($date, $show_id, $time)
 {
-
     $post_id = wp_insert_post(array(
         'post_type' => 'performance',
         'post_title' => $date,
@@ -275,9 +274,9 @@ function preview()
 {
     global $post;
     $custom             = get_post_custom($post->ID);
-    $preview   = $custom['preview'][0] ? $custom['preview'][0] : '';
+    $preview   = isset($custom['preview']) ? $custom['preview'][0] : '';
 ?>
-    <label for="preview">Preview:</label>
+    <label for="preview">Preview performance:</label>
     <input type="checkbox" name="preview" value="1" <?php echo ((int) $preview == 1) ? 'checked="checked"' : ''; ?> />
 
 <?php
@@ -287,7 +286,7 @@ function preview()
 function save_preview()
 {
     global $post;
-    $preview   = $_POST['preview'];
+    $preview   = isset($_POST['preview']) ? $_POST['preview'] : '';
     update_post_meta($post->ID, 'preview', $preview);
 }
 
@@ -295,9 +294,9 @@ function talkback()
 {
     global $post;
     $custom             = get_post_custom($post->ID);
-    $talkback   = $custom['talkback'][0] ? $custom['talkback'][0] : '';
+    $talkback   = isset($custom['talkback']) ? $custom['talkback'][0] : '';
 ?>
-    <label for="talkback">Preview:</label>
+    <label for="talkback">Talkback performance:</label>
     <input type="checkbox" name="talkback" value="1" <?php echo ((int) $talkback == 1) ? 'checked="checked"' : ''; ?> />
 
 <?php
@@ -307,6 +306,6 @@ function talkback()
 function save_talkback()
 {
     global $post;
-    $talkback   = $_POST['talkback'];
+    $talkback   = isset($_POST['talkback']) ? $_POST['talkback'] : '';
     update_post_meta($post->ID, 'talkback', $talkback);
 }

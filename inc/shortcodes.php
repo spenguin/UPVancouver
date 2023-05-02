@@ -7,6 +7,6 @@ namespace Shortcodes;
 
 function initialize()
 {
-    require_once CORE_SHORTCODE . '/show_calendar.php';
+    // require_once CORE_SHORTCODE . '/show_calendar.php';
     // add_shortcode('show_calendar', '\show_calendar');
 }

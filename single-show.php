@@ -18,6 +18,8 @@ while (have_posts()) :
             <main>
 
                 <?php echo get_the_content(); ?>
+                <?php get_template_part('template-parts/content', get_post_type()); ?>
+
             </main>
             <sidebar></sidebar>
         </div>
