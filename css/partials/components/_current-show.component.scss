@@ -9,5 +9,12 @@
         text-decoration: none;
         font-size: 0.75rem;
     }
-
+}
+.single-show .container {
+    padding: 2%;
+    background-color: $UPVWhite;
+    color: $UPVDarkGrey;
+}
+.single-show > img {
+    width: 100%;
 }

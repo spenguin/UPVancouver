@@ -177,6 +177,16 @@ body {
   font-size: 0.75rem;
 }
 
+.single-show .container {
+  padding: 2%;
+  background-color: #ffffff;
+  color: #222222;
+}
+
+.single-show > img {
+  width: 100%;
+}
+
 /** News style */
 .news {
   padding: 2rem 2%;
@@ -196,6 +206,20 @@ body {
 }
 .news__article--image img {
   width: 100%;
+}
+
+/* Content styles accumulator */
+/* Show styles accumulator */
+/** Show Details style */
+.show-details {
+  line-height: 1.5rem;
+}
+.show-details p {
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+}
+.show-details span {
+  font-weight: bold;
 }
 
 /*

@@ -54,13 +54,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _hello = __webpack_require__(159);
+	var _Show = __webpack_require__(159);
 
-	var _hello2 = _interopRequireDefault(_hello);
+	var _Show2 = _interopRequireDefault(_Show);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_hello2.default, null), document.getElementById('Test'));
+	_reactDom2.default.render(_react2.default.createElement(_Show2.default, null), document.getElementById('Show'));
 
 /***/ },
 /* 1 */
@@ -19760,10 +19760,10 @@
 /* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+	    value: true
 	});
 
 	var _react = __webpack_require__(1);
@@ -19772,15 +19772,17 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Hello = function Hello() {
-	  return _react2.default.createElement(
-	    'h1',
-	    null,
-	    'Hello'
-	  );
-	};
+	var Show = function Show() {
+	    return _react2.default.createElement(
+	        "p",
+	        null,
+	        "Show Details"
+	    );
+	}; // Show component
+	// Called from index.js
 
-	exports.default = Hello;
+	// import nodes
+	exports.default = Show;
 
 /***/ }
 /******/ ]);

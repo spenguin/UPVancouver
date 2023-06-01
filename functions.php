@@ -17,6 +17,7 @@ if (!defined('_S_VERSION')) {
 define('CORE_URL', get_template_directory());
 define('CORE_INC', CORE_URL . '/inc');
 define('CORE_SHORTCODE', CORE_INC . '/shortcodes');
+define('CORE_DIST', site_url() . '/wp-content/themes/upvancouver/js/dist/');
 
 require_once CORE_INC . '/shortcodes.php';
 
