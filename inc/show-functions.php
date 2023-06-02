@@ -115,9 +115,12 @@ function get_calendar_values($show_id)
     if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post();
             $post_id = get_the_ID();
             $custom = get_post_custom($post_id);
-            $o[strtotime(get_the_title())]  = [
+            $date   = strtotime(get_the_title());
+            $o[$date]  = [
+                'date'      => $date,
                 'preview'   => isset($custom['preview']) ? $custom['preview'][0] : '',
-                'talkback'  => isset($custom['talkback']) ? $custom['talkback'][0] : ''
+                'talkback'  => isset($custom['talkback']) ? $custom['talkback'][0] : '',
+                'performance_time'  => isset($custom['performance_time']) ? $custom['performance_time'][0] : ''
             ];
         endwhile;
     endif;

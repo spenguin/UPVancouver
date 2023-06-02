@@ -222,6 +222,34 @@ body {
   font-weight: bold;
 }
 
+.show-dates__list {
+  padding-left: 0;
+}
+
+.show-date {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: #999999;
+  border-bottom: 2px solid #222222;
+  padding-right: 5%;
+  height: 3rem;
+}
+.show-date:hover {
+  background-color: #00a4b0;
+}
+.show-date__select {
+  width: 10%;
+}
+.show-date__date {
+  width: 50%;
+}
+.show-date__notes {
+  width: 35%;
+  font-size: 1rem;
+}
+
 /*
 @import "partials/components.header";
 @import "partials/components.footer";

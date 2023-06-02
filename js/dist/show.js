@@ -60,7 +60,15 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_Show2.default, null), document.getElementById('Show'));
+	_reactDom2.default.render(_react2.default.createElement(_Show2.default, {
+	    show_dates: show_dates
+	}), document.getElementById('Show'));
+
+	// import components
+	// Show component
+	// created 31 May 2023
+
+	// import nodes
 
 /***/ },
 /* 1 */
@@ -19770,19 +19778,107 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _Show_date = __webpack_require__(160);
+
+	var _Show_date2 = _interopRequireDefault(_Show_date);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Show = function Show() {
-	    return _react2.default.createElement(
-	        "p",
-	        null,
-	        "Show Details"
-	    );
-	}; // Show component
+	// Show component
 	// Called from index.js
 
 	// import nodes
+	var Show = function Show(_ref) {
+	    var show_dates = _ref.show_dates;
+	    //console.log( 'dates', show_dates );
+
+	    return _react2.default.createElement(
+	        "ul",
+	        { className: "show-dates__list" },
+	        Object.keys(show_dates).map(function (keyname) {
+	            return _react2.default.createElement(_Show_date2.default, {
+	                show_date: show_dates[keyname]
+	            });
+	        })
+	    )
+
+	    // show_dates.map( (date) =>(
+	    //     <Show_date
+	    //         date={date}
+	    //     />
+	    // ))
+	    ;
+	};
+
+	// import components
 	exports.default = Show;
+
+	// {Object.keys(subjects).map((keyName, i) => (
+	//     <li className="travelcompany-input" key={i}>
+	//         <span className="input-label">key: {i} Name: {subjects[keyName]}</span>
+	//     </li>
+	// ))}
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Show_date = function Show_date(_ref) {
+	    var show_date = _ref.show_date;
+
+	    var dateFormat = new Date(show_date.date * 1000);
+	    dateFormat.setDate(dateFormat.getDate() + 1); // Kludge to get correct date - I hope.
+	    var options = { month: "short", day: "numeric", year: "numeric" };
+
+	    // set variables
+	    var performanceClass = show_date.preview ? " show-date--preview" : "";
+	    var previewMsg = show_date.preview ? "Preview performance" : "";
+	    var talkbackMsg = show_date.talkback ? "Talkback performance" : "";
+
+	    return _react2.default.createElement(
+	        "li",
+	        { className: "show-date " + performanceClass, key: show_date.date },
+	        _react2.default.createElement(
+	            "div",
+	            { className: "show-date__select" },
+	            _react2.default.createElement("input", { type: "radio", value: show_date.date, name: "selectedPerformance" })
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { className: "show-date__date" },
+	            new Intl.DateTimeFormat('en-ca', options).format(dateFormat),
+	            _react2.default.createElement("br", null),
+	            show_date.performance_time
+	        ),
+	        _react2.default.createElement(
+	            "div",
+	            { className: "show-date__notes" },
+	            _react2.default.createElement(
+	                "p",
+	                null,
+	                previewMsg,
+	                _react2.default.createElement("br", null),
+	                talkbackMsg
+	            )
+	        )
+	    );
+	}; /** Show Date component */
+	/* Called from Shows.jsx */
+
+	// import nodes
+	exports.default = Show_date;
 
 /***/ }
 /******/ ]);
