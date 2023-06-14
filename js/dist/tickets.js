@@ -54,19 +54,19 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _Show = __webpack_require__(159);
+	var _Tickets = __webpack_require__(159);
 
-	var _Show2 = _interopRequireDefault(_Show);
+	var _Tickets2 = _interopRequireDefault(_Tickets);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_Show2.default, {
-	    show_dates: show_dates
-	}), document.getElementById('Show'));
+	_reactDom2.default.render(_react2.default.createElement(_Tickets2.default, {
+	    tickets: tickets
+	}), document.getElementById('Tickets'));
 
 	// import components
-	// Show component
-	// created 31 May 2023
+	// Ticket component
+	// created 02 June 2023
 
 	// import nodes
 
@@ -19778,94 +19778,34 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Show_date = __webpack_require__(160);
-
-	var _Show_date2 = _interopRequireDefault(_Show_date);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Show component
-	// Called from index.js
-
-	// import nodes
-	var Show = function Show(_ref) {
-	    var show_dates = _ref.show_dates;
-	    //console.log( 'dates', show_dates );
+	var Tickets = function Tickets(_ref) {
+	    var tickets = _ref.tickets;
+	    console.log('tickets', tickets);
 
 	    return _react2.default.createElement(
-	        "ul",
-	        { className: "show-dates__list" },
-	        Object.keys(show_dates).map(function (keyname) {
-	            return _react2.default.createElement(_Show_date2.default, {
-	                show_date: show_dates[keyname]
-	            });
+	        "div",
+	        { className: "ticket-list" },
+	        Object.keys(tickets).map(function (keyname) {
+	            return _react2.default.createElement(
+	                "div",
+	                { className: "ticket-list__ticket" },
+	                _react2.default.createElement(
+	                    "p",
+	                    null,
+	                    tickets[keyname].name,
+	                    ":",
+	                    tickets[keyname].charge
+	                )
+	            );
 	        })
 	    );
-	};
-
-	// import components
-	exports.default = Show;
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Show_date = function Show_date(_ref) {
-	    var show_date = _ref.show_date;
-
-	    var dateFormat = new Date(show_date.date * 1000);
-	    dateFormat.setDate(dateFormat.getDate() + 1); // Kludge to get correct date - I hope.
-	    var options = { month: "short", day: "numeric", year: "numeric" };
-
-	    // set variables
-	    var performanceClass = show_date.preview ? " show-date--preview" : "";
-	    var previewMsg = show_date.preview ? "Preview performance" : "";
-	    var talkbackMsg = show_date.talkback ? "Talkback performance" : "";
-
-	    return _react2.default.createElement(
-	        "li",
-	        { className: "show-date " + performanceClass, key: show_date.date },
-	        _react2.default.createElement(
-	            "div",
-	            { className: "show-date__select" },
-	            _react2.default.createElement("input", { type: "radio", value: show_date.date, name: "selectedPerformance" })
-	        ),
-	        _react2.default.createElement(
-	            "div",
-	            { className: "show-date__date" },
-	            new Intl.DateTimeFormat('en-ca', options).format(dateFormat),
-	            _react2.default.createElement("br", null),
-	            show_date.performance_time
-	        ),
-	        _react2.default.createElement(
-	            "div",
-	            { className: "show-date__notes" },
-	            _react2.default.createElement(
-	                "p",
-	                null,
-	                previewMsg,
-	                _react2.default.createElement("br", null),
-	                talkbackMsg
-	            )
-	        )
-	    );
-	}; /** Show Date component */
-	/* Called from Shows.jsx */
+	}; // Tickets component
+	// called from index.js
 
 	// import nodes
-	exports.default = Show_date;
+	exports.default = Tickets;
 
 /***/ }
 /******/ ]);
