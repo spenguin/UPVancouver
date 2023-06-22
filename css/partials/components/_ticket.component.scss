@@ -1,0 +1,57 @@
+/** Ticket styles */
+
+.ticket-list__ticket--select {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-bottom: 1px dashed $UPVLightGrey;  
+    height: 5rem;  
+}
+.ticket-select {
+    &__name {
+        width: 30%;
+    }
+    &__quantity {
+        width: 40%;
+        display: flex;
+        justify-content: center;
+        &--block {
+            max-width: 102px;
+            margin: 0 auto;
+            input {
+                width: 1rem;
+                background-color: $UPVWhite;
+            }
+        }
+        .fa-minus {
+            margin-right: 0.75rem;
+            background-color: $UPVLightGrey;
+            border-radius: 4px;
+            padding:0.25rem;
+            box-shadow: 5px 2px 2px $UPVBlack;
+            &:hover {
+                background-color: $UPVBlue;
+                box-shadow: 2px 1px 1px $UPVDarkGrey;
+            }
+        }
+        .fa-plus {
+            margin-left: 0.75rem;
+            border-radius: 4px;
+            background-color: $UPVLightGrey;
+            padding: 0.25rem;
+            box-shadow: 5px 2px 2px $UPVBlack;
+            &:hover {
+                background-color: $UPVBlue;
+                box-shadow: 2px 1px 1px $UPVDarkGrey;
+            }            
+        }
+    }
+    &__charge {
+        width: 30%;
+        text-align: right;
+    }
+}

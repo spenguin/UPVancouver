@@ -17,10 +17,20 @@
     "url": "https://github.com/Automattic/_s/issues"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-react": "^7.22.5",
     "@wordpress/scripts": "^19.2.2",
+    "babel-loader": "^9.1.2",
     "dir-archiver": "^1.1.1",
     "node-sass": "^7.0.1",
-    "rtlcss": "^3.5.0"
+    "rtlcss": "^3.5.0",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "rtlcssConfig": {
     "options": {
@@ -45,6 +55,5 @@
     "build_test": "webpack --config js/webpack.test.config.js",
     "build_show": "webpack --config js/webpack.show.config.js",
     "build_tickets": "webpack --config js/webpack.tickets.config.js"
-
   }
 }

@@ -36,14 +36,14 @@ function get_tickets()
         while ($loop->have_posts()) : $loop->the_post();
             $ticketId       = get_the_ID();
             $ticket_charge  = get_post_meta($ticketId, 'ticket_charge', TRUE);
-            $o[$ticketId]   = [
+            $o[]   = [
+                'ticketid'  => $ticketId,
                 'name'      => get_the_title(),
-                'charge'    => $ticket_charge
-
+                'charge'    => $ticket_charge,
+                'quantity'  => 0
             ];
         endwhile;
     endif;
     wp_reset_postdata();
-
     return $o;
 }
