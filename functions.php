@@ -20,6 +20,8 @@ define('CORE_SHORTCODE', CORE_INC . '/shortcodes');
 define('CORE_DIST', site_url() . '/wp-content/themes/upvancouver/js/dist/');
 
 require_once CORE_INC . '/shortcodes.php';
+require_once CORE_INC . '/post-functions.php';
+require_once(CORE_INC . '/header-functions.php');
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.

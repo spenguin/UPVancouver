@@ -23,4 +23,4 @@
 </head>
 
 <body <?php body_class(); ?>>
-	<section class="current-show"><a href="">Now playing: <strong>Hedda Gabler</strong></a></section>
+	<?php get_template_part('template-parts/content-header'); ?>

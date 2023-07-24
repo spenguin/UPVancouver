@@ -3,14 +3,19 @@
 body {
     background-color: $UPVGrey;
 }
+
 .footer {
+
     background-color: $UPVDarkBlue;
     padding: 3% 5% 3% 8%;
+
     &-wrapper {
         display: flex;
-        justify-content: space-between;
+        // justify-content: space-between;
+        flex-direction: column;
     }
+
     &__main {
-        width: 48%;
+        width: 98%;
     }
 }

@@ -5,3 +5,9 @@ body {
     font-size: 1.2rem;
     line-height: 1.75rem;
 }
+
+p {
+    &.copyright {
+        font-size: 0.85rem;
+    }
+}

@@ -5,7 +5,9 @@
 @import "partials/_structure.all";
 @import "partials/_typography.all";
 
-// @import "partials/tools/tools.mixins";
+@import "partials/variables";
+
+@import "partials/tools/tools.mixins";
 // @import "partials/tools/tools.media-queries";
 
 // @import "partials/elements.all";
@@ -20,6 +22,7 @@
 */
 @import "partials/components.all";
 @import "partials/content.all";
+@import "partials/elements.all";
 /*
 @import "partials/components.header";
 @import "partials/components.footer";

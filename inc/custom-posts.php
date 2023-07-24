@@ -153,8 +153,8 @@ function show_dates()
 {
     global $post;
     $custom = get_post_custom($post->ID);
-    $start_date = ($custom['start_date'][0]) ? $custom['start_date'][0] : '';
-    $end_date   = ($custom['end_date'][0]) ? $custom['end_date'][0] : '';
+    $start_date = (isset($custom['start_date'][0])) ? $custom['start_date'][0] : '';
+    $end_date   = (isset($custom['end_date'][0])) ? $custom['end_date'][0] : '';
 ?>
     <label for="start_date">Start Date:</label>
     <input type="date" name="start_date" value="<?php echo $start_date; ?>" />
@@ -167,7 +167,10 @@ function show_dates()
 function save_show_dates()
 {
     global $post;
+    if (empty($post->ID)) return;
     $custom     = get_post_custom($post->ID);
+    $pre_start_date = (isset($custom['start_date'][0])) ? $custom['start_date'][0] : '';
+    $pre_end_date   = (isset($custom['end_date'][0])) ? $custom['end_date'][0] : '';
     $start_date = $_POST['start_date'];
     $end_date   = $_POST['end_date'];
     $show_id    = (string) $post->ID;
@@ -175,7 +178,7 @@ function save_show_dates()
     $p         = [];
 
 
-    if ($start_date != $custom['start_date'][0] || $end_date != $custom['end_date'][0]) {
+    if ($start_date != $pre_start_date || $end_date != $pre_end_date) {
         update_post_meta($post->ID, 'start_date', $start_date);
         update_post_meta($post->ID, 'end_date', $end_date);
 
