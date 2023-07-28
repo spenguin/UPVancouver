@@ -47,10 +47,41 @@ function performance_settings_init()
             'performance_custom_data'   => 'custom'
         )
     );
+
+    add_settings_field(
+        'season_ticket_settings',
+        __('Season Ticket Advanced Offer settings', 'performance' ),
+        'performance_season_ticket_settings_cb',
+        'performance',
+        'performance_section_developers',
+        array(
+            [
+                'label_for' => 'performance_field_season_ticket_end_day',
+                'class'     => 'performance_field_season_ticket_end_day',
+                'performance_custom_data'   => 'custom'
+            ],
+            [
+                'label_for' => 'performance_field_season_ticket_string',
+                'class'     => 'performance_field_season_ticket_string',
+                'performance_custom_data'   => 'custom'
+            ]          
+        )
+    );
 }
 
 
 add_action('admin_init', 'performance_settings_init');
+
+function performance_season_ticket_settings_cb($args)
+{
+    $options = get_option('performance_options'); 
+    ?>
+    <label for="<?php echo esc_attr($args[0]['label_for']); ?>">Season Ticket End Date:</label>
+    <input type="date" name="performance_options[<?php echo esc_attr($args[0]['label_for']); ?>]" value="<?php echo isset( $options[$args[0]['label_for']] ) ? $options[$args[0]['label_for']] : NULL; ?>" />
+    <label for="<?php echo esc_attr($args[1]['label_for']); ?>">Season Ticket Sales Phrase:</label>
+    <input type="text" name="performance_options[<?php echo esc_attr($args[1]['label_for']); ?>]" value="<?php echo isset( $options[$args[1]['label_for']] ) ? $options[$args[1]['label_for']] : ''; ?>" />
+    <?php
+}
 
 function performance_field_times_cb($args)
 {
@@ -81,23 +112,23 @@ function performance_field_days_cb($args)
         </tr>
         <tr>
             <td>Matinee</td>
-            <td><input name="performance_options['m'][0]" value="1" type="checkbox" <?php echo ($options["'m'"][0] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][1]" value="1" type="checkbox" <?php echo ($options["'m'"][1] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][2]" value="1" type="checkbox" <?php echo ($options["'m'"][2] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][3]" value="1" type="checkbox" <?php echo ($options["'m'"][3] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][4]" value="1" type="checkbox" <?php echo ($options["'m'"][4] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][5]" value="1" type="checkbox" <?php echo ($options["'m'"][5] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['m'][6]" value="1" type="checkbox" <?php echo ($options["'m'"][6] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][0]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][0] ) && $options["'m'"][0] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][1]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][1] ) && $options["'m'"][1] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][2]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][2] ) && $options["'m'"][2] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][3]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][3] ) && $options["'m'"][3] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][4]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][4] ) && $options["'m'"][4] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][5]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][5] ) && $options["'m'"][5] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['m'][6]" value="1" type="checkbox" <?php echo (isset( $options["'m'"][6] ) && $options["'m'"][6] == '1') ? 'checked="checked"' : ''; ?> /></td>
         </tr>
         <tr>
             <td>Evening</td>
-            <td><input name="performance_options['e'][0]" value="1" type="checkbox" <?php echo ($options["'e'"][0] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][1]" value="1" type="checkbox" <?php echo ($options["'e'"][1] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][2]" value="1" type="checkbox" <?php echo ($options["'e'"][2] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][3]" value="1" type="checkbox" <?php echo ($options["'e'"][3] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][4]" value="1" type="checkbox" <?php echo ($options["'e'"][4] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][5]" value="1" type="checkbox" <?php echo ($options["'e'"][5] == '1') ? 'checked="checked"' : ''; ?> /></td>
-            <td><input name="performance_options['e'][6]" value="1" type="checkbox" <?php echo ($options["'e'"][6] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][0]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][0] ) && $options["'e'"][0] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][1]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][1] ) && $options["'e'"][1] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][2]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][2] ) && $options["'e'"][2] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][3]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][3] ) && $options["'e'"][3] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][4]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][4] ) && $options["'e'"][4] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][5]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][5] ) && $options["'e'"][5] == '1') ? 'checked="checked"' : ''; ?> /></td>
+            <td><input name="performance_options['e'][6]" value="1" type="checkbox" <?php echo ( isset( $options["'e'"][6] ) && $options["'e'"][6] == '1') ? 'checked="checked"' : ''; ?> /></td>
         </tr>
     </table>
 

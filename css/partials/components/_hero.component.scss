@@ -49,6 +49,10 @@
         &-statement {
             color: $UPVWhite;
             width: 60%;
+
+            h1 {
+                display: inline;
+            }
         }
 
         &-logo {

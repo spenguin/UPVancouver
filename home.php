@@ -14,10 +14,10 @@ get_header();
 
 <main id="primary" class="site-main">
     <section class="hero">
-        <div class="hero__main">
+        <div class="hero__main max-wrapper">
             <img class="hero-image" src="<?php echo get_template_directory_uri(); ?>/assets/defaultheroimage.jpg" />
             <div class="hero__text-wrapper">
-                <div class="hero__show"><a href=""><span class="hero__show--text"><strong>Hedda Gabler</strong> running from 24 March to 16 April</span></a></div>
+                <!-- <div class="hero__show"><a href=""><span class="hero__show--text"><strong>Hedda Gabler</strong> running from 24 March to 16 April</span></a></div> -->
                 <div class="hero__upv">
                     <div class="hero__upv-statement">
                         <?php
@@ -36,7 +36,7 @@ get_header();
         </div>
     </section>
 
-    <section class="shows">
+    <section class="shows max-wrapper">
         <div class="shows__wrapper">
             <?php get_template_part('template-parts/content-show-list'); ?>
         </div>

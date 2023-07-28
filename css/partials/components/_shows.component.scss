@@ -1,6 +1,9 @@
 /** Shows component styling */
 
 .shows {
+    border-left: 1px solid $UPVLightGrey;
+    border-right: 1px solid $UPVLightGrey;
+
     h2 {
         text-align: center;
     }
