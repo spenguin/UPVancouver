@@ -147,6 +147,35 @@ function get_season()
  */
 function get_shows_listing($seasonId)
 {
+    // Any shows promoted before the Season Listing?
+
+    $args = [
+        'post_type' => 'show',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'season',
+                'field' => 'term_id',
+                'terms' => $seasonId
+            )
+        ),
+        'meta_key'  => 'promote_show',
+        'meta_value'=> "1"        
+    ];
+    $query = new WP_Query($args);
+    if( $query->have_posts()) : while( $query->have_posts()) : $query->the_post();
+        $post_id = get_the_ID(); //var_dump(get_post_thumbnail_id( $post_id));
+        ob_start();
+        ?>
+            <div class="shows_promoted-show">
+                <a href="">
+                    <?php the_post_thumbnail('show_listing'); ?>
+                </a>
+            </div>
+        <?php
+    endwhile; endif; wp_reset_postdata();
+
+    
+    
     $args = array(
         'post_type' => 'show',
         'tax_query' => array(
@@ -164,12 +193,12 @@ function get_shows_listing($seasonId)
     );
     $query = new WP_Query($args);
     // var_dump($query);
-    ob_start();
+ 
     if ($query->have_posts()) : while ($query->have_posts()) : $query->the_post();
         ?>
             <div class="shows__list-show">
                 <?php if (has_post_thumbnail()) { ?>
-                    <a href=""><img src="<?php echo get_template_directory_uri(); ?>/assets/upv-show-banner-sm.jpg" />
+                    <!-- <a href=""><img src="<?php  echo get_template_directory_uri(); ?>/assets/upv-show-banner-sm.jpg" /> -->
                         <div class="shows__list-info">
                             <h4>Tickets & Details</h4>
                             <h3><?php get_the_title(); ?></h3>
@@ -188,4 +217,69 @@ function get_shows_listing($seasonId)
     endif;
     wp_reset_postdata();
     return ob_get_clean();
+}
+
+
+/**
+ * @author: John Anderson
+ * @since: 7 August 2023
+ * Get the shows for the current season
+ * @param (int) season Id
+ * @return (object) shows
+ */
+function getShowsBySeasonId( $seasonId, $notPast = FALSE )
+{
+    $args = array(
+        'post_type' => 'show',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'season',
+                'field' => 'term_id',
+                'terms' => $seasonId
+            )
+        ),
+        'ordeby'        => 'ID',
+        'order'         => 'ASC',
+        'meta_key'      => 'end_date',    //This didn't quite work but it's the better way
+        'meta_value'    => date( 'Y-m-d' ),
+        'meta_compare'  => '>='
+    );
+    $query = new WP_Query($args); 
+    wp_reset_postdata();
+
+    return $query;
+}
+
+/**
+ * @author: John Anderson
+ * @since: 7 August 2023
+ * List the shows
+ * @param (object) shows
+ * @return (str) shows Listing
+ */
+function listShows( $shows )
+{   
+    ob_start();
+    if ($shows->have_posts()) : while ($shows->have_posts()) : $shows->the_post();
+        ?>
+            <div class="shows__list-show">
+                <div class="shows__list-info">
+                    <?php echo the_excerpt(); ?>
+                </div>
+            </div>
+    <?php
+        endwhile;
+    endif;
+    return ob_get_clean();
+}
+
+/**
+ * @author: John Anderson
+ * @since: 7 August 2023
+ * Generate the current season shows listing
+ */
+function generateSeasonShowsListing()
+{
+
+    return '<h1>' . $season->name . '</h1>' . listShows( $shows );
 }

@@ -273,6 +273,15 @@ Requires breakpoints to be set or imported
 .shows__list--ticket a:hover {
   box-shadow: 1px 1px 3px black;
 }
+.shows_promoted-show {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.shows_promoted-show img {
+  max-width: 100%;
+  height: auto;
+}
 
 /** Current show */
 .current-show {

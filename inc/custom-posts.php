@@ -12,6 +12,8 @@ function initialize()
     add_action('init', '\CustomPosts\custom_taxonomy_type', 0);
     add_action('admin_init', '\CustomPosts\admin_init');
     add_action('save_post_show', '\CustomPosts\save_show_dates');
+    add_action('save_post_show', '\CustomPosts\save_promote_show');    
+
     // add_action('save_post_performance', '\CustomPosts\save_performance_meta');
     add_action('save_post_performance', '\CustomPosts\save_preview');
     add_action('save_post_performance', '\CustomPosts\save_talkback');
@@ -146,6 +148,7 @@ function admin_init()
     add_meta_box('performance_meta', 'Performance Details', '\CustomPosts\performanceDetails', 'performance', 'side');
     add_meta_box('performance_preview_meta', 'Preview', '\CustomPosts\preview', 'performance', 'side');
     add_meta_box('performance_talkback_meta', 'Talkback', '\CustomPosts\talkback', 'performance', 'side');
+    add_meta_box('show_promote_meta', 'Promote Show', '\CustomPosts\promote_show', 'show', 'side', 'high' );
 }
 
 
@@ -311,4 +314,23 @@ function save_talkback()
     global $post;
     $talkback   = isset($_POST['talkback']) ? $_POST['talkback'] : '';
     update_post_meta($post->ID, 'talkback', $talkback);
+}
+
+function promote_show()
+{
+    global $post;
+    $custom         = get_post_custom( $post->ID ); 
+    $promote_show   = isset( $custom['promote_show'] ) ? $custom['promote_show'][0] : '';
+?>
+    <label for="promote_show">Promote Show:</label>
+    <input type="checkbox" name="promote_show" value="1" <?php echo ((int) $promote_show == 1 ) ? 'checked="checked"' : ''; ?> />
+<?php
+
+}
+
+function save_promote_show()
+{
+    global $post;
+    $promote_show   = isset($_POST['promote_show']) ? $_POST['promote_show'] : ''; 
+    update_post_meta($post->ID, 'promote_show', $promote_show);
 }

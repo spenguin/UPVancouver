@@ -26,7 +26,7 @@ function header_display()
     // var_dump($query);
     if (!$query->found_posts) {
         // Not current shows
-        return '<a href="">Next Season Tickets now on sale!</a>';
+        return '<a href="' . site_url() . '/season-tickets">Next Season Tickets now on sale!</a>';
     } else {
         $current_show = $query->posts[0];
         return '<a href="">Now playing: <strong>' . $current_show->post_title . '</strong></a>';

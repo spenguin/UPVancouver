@@ -9,7 +9,6 @@
  */
 
 get_header();
-// include_once(CORE_INC . '/post-functions.php');
 ?>
 
 <main id="primary" class="site-main">

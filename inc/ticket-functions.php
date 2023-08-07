@@ -47,3 +47,39 @@ function get_tickets()
     wp_reset_postdata();
     return $o;
 }
+
+/**
+ * @author: John Anderson
+ * @since: 7 August 2023
+ * Get ticket details
+ * @param (bool) Season tickets
+ * @return (array)
+ */
+function getTickets( $seasonTickets = FALSE )
+{
+    $args = [
+        'post_type' => 'ticket',
+        'posts_per_page' => -1,
+        [
+            'taxonomy'  => 'ticket-type',
+            'field'     => 'slug',
+            'terms'     => $seasonTickets ? 'season-ticket' : 'single-show'
+        ]
+        ];
+    $o  = [];
+    $loop = new WP_Query($args);
+    if ($loop->have_posts()) :
+        while ($loop->have_posts()) : $loop->the_post();
+            $ticketId       = get_the_ID();
+            $ticket_charge  = get_post_meta($ticketId, 'ticket_charge', TRUE);
+            $o[]   = [
+                'ticketid'  => $ticketId,
+                'name'      => get_the_title(),
+                'charge'    => $ticket_charge,
+                'quantity'  => 0
+            ];
+        endwhile;
+    endif;
+    wp_reset_postdata();
+    return $o;
+}
