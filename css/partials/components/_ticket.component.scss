@@ -1,57 +1,100 @@
 /** Ticket styles */
-
-.ticket-list__ticket--select {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    font-size: 1rem;
-    font-weight: 500;
-    border-bottom: 1px dashed $UPVLightGrey;  
-    height: 5rem;  
+.ticket-list {
+    padding-bottom: 4vh;
 }
+
+.ticket-list__ticket {
+    border-bottom: 1px dashed $UPVLightGrey;
+
+    &--select {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        font-size: 1rem;
+        font-weight: 500;
+        height: 5rem;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
 .ticket-select {
     &__name {
         width: 30%;
     }
+
     &__quantity {
         width: 40%;
         display: flex;
         justify-content: center;
+
         &--block {
-            max-width: 102px;
+            max-width: 150px;
             margin: 0 auto;
+
             input {
-                width: 1rem;
                 background-color: $UPVWhite;
+                width: 2rem;
+                background-color: #ffffff;
+                font-size: 1.2rem;
+                text-align: center;
             }
         }
+
         .fa-minus {
             margin-right: 0.75rem;
             background-color: $UPVLightGrey;
             border-radius: 4px;
-            padding:0.25rem;
+            padding: 0.45rem;
             box-shadow: 5px 2px 2px $UPVBlack;
+            width: 1.75rem;
+            height: 1.75rem;
+            color: $UPVBlack;
+
             &:hover {
                 background-color: $UPVBlue;
                 box-shadow: 2px 1px 1px $UPVDarkGrey;
             }
         }
+
         .fa-plus {
             margin-left: 0.75rem;
             border-radius: 4px;
             background-color: $UPVLightGrey;
             padding: 0.25rem;
             box-shadow: 5px 2px 2px $UPVBlack;
+            border-radius: 4px;
+            background-color: $UPVLightGrey;
+            padding: 0.45rem;
+            box-shadow: 5px 2px 2px $UPVBlack;
+            width: 1.75rem;
+            height: 1.75rem;
+            color: $UPVBlack;
+
             &:hover {
                 background-color: $UPVBlue;
                 box-shadow: 2px 1px 1px $UPVDarkGrey;
-            }            
+            }
         }
     }
+
     &__charge {
         width: 30%;
         text-align: right;
+    }
+}
+
+.ticket-totals {
+    max-width: 600px;
+    margin: 0 auto;
+
+    &__text {
+        text-align: center;
+    }
+
+    &__order {
+        text-align: center;
     }
 }

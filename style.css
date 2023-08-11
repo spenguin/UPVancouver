@@ -328,6 +328,13 @@ Requires breakpoints to be set or imported
 }
 
 /** Ticket styles */
+.ticket-list {
+  padding-bottom: 4vh;
+}
+
+.ticket-list__ticket {
+  border-bottom: 1px dashed #999999;
+}
 .ticket-list__ticket--select {
   display: flex;
   flex-direction: row;
@@ -336,8 +343,9 @@ Requires breakpoints to be set or imported
   padding: 10px;
   font-size: 1rem;
   font-weight: 500;
-  border-bottom: 1px dashed #999999;
   height: 5rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .ticket-select__name {
@@ -349,19 +357,25 @@ Requires breakpoints to be set or imported
   justify-content: center;
 }
 .ticket-select__quantity--block {
-  max-width: 102px;
+  max-width: 150px;
   margin: 0 auto;
 }
 .ticket-select__quantity--block input {
-  width: 1rem;
   background-color: #ffffff;
+  width: 2rem;
+  background-color: #ffffff;
+  font-size: 1.2rem;
+  text-align: center;
 }
 .ticket-select__quantity .fa-minus {
   margin-right: 0.75rem;
   background-color: #999999;
   border-radius: 4px;
-  padding: 0.25rem;
+  padding: 0.45rem;
   box-shadow: 5px 2px 2px #000000;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: #000000;
 }
 .ticket-select__quantity .fa-minus:hover {
   background-color: #00a4b0;
@@ -373,6 +387,13 @@ Requires breakpoints to be set or imported
   background-color: #999999;
   padding: 0.25rem;
   box-shadow: 5px 2px 2px #000000;
+  border-radius: 4px;
+  background-color: #999999;
+  padding: 0.45rem;
+  box-shadow: 5px 2px 2px #000000;
+  width: 1.75rem;
+  height: 1.75rem;
+  color: #000000;
 }
 .ticket-select__quantity .fa-plus:hover {
   background-color: #00a4b0;
@@ -381,6 +402,17 @@ Requires breakpoints to be set or imported
 .ticket-select__charge {
   width: 30%;
   text-align: right;
+}
+
+.ticket-totals {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.ticket-totals__text {
+  text-align: center;
+}
+.ticket-totals__order {
+  text-align: center;
 }
 
 /** Footer styles */
