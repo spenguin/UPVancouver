@@ -25,6 +25,7 @@ require_once(CORE_INC . '/header-functions.php');
 include_once(CORE_INC . '/show-functions.php');
 include_once(CORE_INC . '/images.php' );
 include_once(CORE_INC . '/ticket-functions.php');
+include_once(CORE_INC . '/performance-functions.php');
 
 /**
  * Sets up theme defaults and registers support for various WordPress features.

@@ -12,7 +12,8 @@ function initialize()
     add_action('init', '\CustomPosts\custom_taxonomy_type', 0);
     add_action('admin_init', '\CustomPosts\admin_init');
     add_action('save_post_show', '\CustomPosts\save_show_dates');
-    add_action('save_post_show', '\CustomPosts\save_promote_show');    
+    add_action('save_post_show', '\CustomPosts\save_promote_show');
+    add_action('save_post_show', '\CustomPosts\save_show_cast');    
 
     // add_action('save_post_performance', '\CustomPosts\save_performance_meta');
     add_action('save_post_performance', '\CustomPosts\save_preview');
@@ -149,6 +150,7 @@ function admin_init()
     add_meta_box('performance_preview_meta', 'Preview', '\CustomPosts\preview', 'performance', 'side');
     add_meta_box('performance_talkback_meta', 'Talkback', '\CustomPosts\talkback', 'performance', 'side');
     add_meta_box('show_promote_meta', 'Promote Show', '\CustomPosts\promote_show', 'show', 'side', 'high' );
+    add_meta_box('show_cast_meta', 'Show Cast & Crew', '\CustomPosts\show_cast', 'show' );
 }
 
 
@@ -333,4 +335,22 @@ function save_promote_show()
     global $post;
     $promote_show   = isset($_POST['promote_show']) ? $_POST['promote_show'] : ''; 
     update_post_meta($post->ID, 'promote_show', $promote_show);
+}
+
+function show_cast()
+{
+    global $post;
+    $custom         = get_post_custom( $post->ID );
+    $show_cast      = isset( $custom['show_cast'] ) ? $custom['show_cast'][0] : '';
+?>
+    <label for="show_cast">Show Cast & Crew:</label>
+    <textarea name="show_cast"><?php echo $show_cast; ?></textarea>
+<?php
+}
+
+function save_show_cast()
+{
+    global $post;
+    $show_cast  = isset( $_POST['show_cast'] ) ? $_POST['show_cast'] : '';
+    update_post_meta($post->ID, 'show_cast', $show_cast );
 }

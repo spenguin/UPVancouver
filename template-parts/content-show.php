@@ -3,10 +3,10 @@
 /**
  * Show-specific content presentation
  */
-include_once(CORE_INC . '/show-functions.php');
-include_once(CORE_INC . '/ticket-functions.php');
-$show_dates = get_calendar_values($post->ID);
-$tickets    = get_tickets();
+// $show_dates = get_calendar_values($post->ID);
+$showId         = $post->ID; 
+$performances   = getPerformanceDates( $post->ID );
+$tickets        = getTickets();
 
 // var_dump($tickets);
 // var_dump($show_dates);
@@ -16,15 +16,14 @@ $tickets    = get_tickets();
     ?>
 </section>
 <section class="show-tickets">
-    <div id="Show"></div>
-    <div id="Tickets"></div>
+    <div id="TicketSales"></div>
 
     <script>
-        var show_dates = <?php echo json_encode($show_dates); ?>;
+        var showId = '<?php echo $showId; ?>';
+        var performances = <?php echo json_encode($performances); ?>;
         var tickets = <?php echo json_encode($tickets); ?>;
         // console.log('tickets', tickets);
     </script>
-    <script type="text/javascript" src="<?php echo CORE_DIST; ?>show.js"></script>
-    <script type="text/javascript" src="<?php echo CORE_DIST; ?>tickets.js"></script>
+    <script type="text/javascript" src="<?php echo CORE_DIST; ?>ticketsales.js"></script>
 
 </section>
