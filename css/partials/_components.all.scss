@@ -1,8 +1,7 @@
-/** Component aggregator */
+/** Components styles aggregator */
 
-@import "components/hero.component";
-@import "components/shows.component";
-@import "components/current-show.component";
-@import "components/news.component";
-@import "components/ticket.component";
-@import "components/footer.component";
+@import "components/component.container";
+@import "components/component.header-bar";
+@import "components/component.footer";
+@import "components/component.address-map";
+@import "components/component.navigation";

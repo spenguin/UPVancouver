@@ -1,0 +1,13 @@
+/** Styling for Theatre Address/Map */
+
+.footer__address {
+    background-color: $UPVWhite;
+    display: flex;
+    flex-direction: column;
+    @include screen-greater-than(tablet) {
+        flex-direction: row;
+        & div {
+            width: 50%;
+        }
+    }
+}

@@ -23,4 +23,9 @@
 </head>
 
 <body <?php body_class(); ?>>
-	<?php get_template_part('template-parts/content-header'); ?>
+    <div class="container">
+        <header>
+            <?php get_template_part( 'template-parts/header-bar' ); ?>
+            <?php get_template_part( 'template-parts/hero-image' ); ?>
+            <?php get_template_part( 'template-parts/navigation' ); ?>
+        </header>

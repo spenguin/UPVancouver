@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 100%;
+}
+
 body {
   margin: 0;
 }
@@ -45,37 +49,6 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-/** Structure style accumulator */
-/** Structure styles */
-/**
-	Grid values
-*/
-html {
-  background-color: #444444;
-}
-
-/** Blocks styles */
-body {
-  background-color: #444444;
-}
-
-.max-wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-
-.footer {
-  background-color: #000d0e;
-  padding: 3% 5% 3% 8%;
-}
-.footer-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-.footer__main {
-  width: 98%;
-}
-
 /** Typography */
 body {
   color: #999999;
@@ -89,427 +62,94 @@ p.copyright {
 
 /** Variables for site */
 /** Breakpoints */
+/** Structure styles aggregator */
+/** General Structure styles */
+.max-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/** Structure Breakpoint styles */
 /** 	Mixins */
 /**
 Function to wrap appropriate media query around content
 param: screen size, either tablet or desktop 
 Requires breakpoints to be set or imported
 */
-/*
-@import "partials/objects.grid";
-@import "partials/objects.wrappers";*/
-/*
-@import "partials/elements.headings";
-@import "partials/elements.text";
-*/
-/** Component aggregator */
-/** Hero component */
-.hero {
-  position: relative;
-}
-.hero__main {
-  display: none;
-  overflow: hidden;
-  position: relative;
-}
-@media screen and (min-width: 768px) {
-  .hero__main {
-    display: block;
-  }
-  .hero__main .hero-image {
-    width: 100%;
-  }
-}
-.hero__text-wrapper {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  animation: MoveUp 1s linear;
-  left: 0;
-  background: rgba(0, 0, 0, 0.5);
-  animation-delay: 2s;
-  animation-fill-mode: forwards;
-}
-@keyframes MoveUp {
-  0% {
-    top: 100%;
-  }
-  100% {
-    top: 0;
-  }
-}
-.hero__upv {
-  display: flex;
-  position: absolute;
-  bottom: 4rem;
-  justify-content: space-between;
-  padding: 0px 2%;
-}
-.hero__upv-statement {
-  color: #ffffff;
-  width: 60%;
-}
-.hero__upv-statement h1 {
-  display: inline;
-}
-.hero__upv-logo {
-  display: flex;
-  justify-content: flex-end;
-  width: 40%;
-}
-.hero__upv-logo img {
-  width: 100%;
-}
-.hero__mobile {
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  display: flex;
-  flex-direction: column;
+/** Components styles aggregator */
+/** Container styles */
+.container {
+  background: linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px, linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px, linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px, linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px, linear-gradient(90deg, #1b1b1b 10px, transparent 10px), linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
   background-color: #222222;
-}
-@media screen and (min-width: 768px) {
-  .hero__mobile {
-    display: none;
-  }
-}
-.hero__mobile--logo {
-  width: 50%;
-  margin: 0 auto;
-}
-.hero__mobile--logo img {
-  width: 100%;
-}
-.hero__mobile--statement {
-  font-size: 1rem;
-  padding-left: 2%;
-  padding-right: 2%;
-}
-.hero__mobile--statement h1 {
-  display: inline;
+  background-size: 20px 20px;
 }
 
-/** Shows component styling */
-.shows {
-  border-left: 1px solid #999999;
-  border-right: 1px solid #999999;
-}
-.shows h2 {
-  text-align: center;
-}
-.shows__wrapper {
-  width: 100%;
-}
-.shows__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-left: 1%;
-  margin-right: 1%;
-}
-.shows__list-show {
-  width: 98%;
-  margin: 0 auto;
-  position: relative;
-  text-align: center;
-}
-.shows__list-show a {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  color: #ffffff;
-  text-align: center;
-  transition: transform 0.4s;
-}
-.shows__list-show a img {
-  width: 100%;
-}
-.shows__list-show a .shows__list-info {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 0;
-  background-color: #000000;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  opacity: 0;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
-}
-.shows__list-show a h3 {
-  margin-top: 0;
-}
-.shows__list-show a h4 {
-  text-transform: uppercase;
-  margin-bottom: 0;
-}
-.shows__list-show .shows__list-info {
-  text-align: center;
-}
-.shows__list--ticket {
-  margin-bottom: 1rem;
-  margin-left: 1%;
-  margin-right: 1%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-.shows__list--ticket p {
-  border: 1px solid #ffffff;
-  padding: 0.15rem;
-  width: 100%;
-  max-width: 500px;
-}
-.shows__list--ticket a {
-  text-decoration: none;
-  display: block;
-  text-align: center;
-  max-width: 20rem;
-  margin: 0 auto;
-  box-shadow: 3px 3px 5px black;
-}
-.shows__list--ticket a:hover {
-  box-shadow: 1px 1px 3px black;
-}
-.shows_promoted-show {
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-}
-.shows_promoted-show img {
-  max-width: 100%;
-  height: auto;
-}
-
-/** Current show */
-.current-show {
+/** Header Bar styles */
+.header-bar {
   background-color: #00a4b0;
+  height: 2.25rem;
   text-align: center;
+  padding-top: 0.5rem;
 }
-.current-show a {
+.header-bar a {
   color: #ffffff;
   text-decoration: none;
-  font-size: 0.75rem;
-  display: block;
-  padding: 0.5rem;
-}
-
-.single-show .container {
-  padding: 2%;
-  background-color: #ffffff;
-  color: #222222;
-}
-
-.single-show > img {
-  width: 100%;
-}
-
-/** News style */
-.news {
-  padding: 2rem 2%;
-  background-color: #ffffff;
-}
-.news__article--text {
-  color: #444444;
-}
-.news__article--text h2 {
-  text-transform: uppercase;
-  text-align: center;
-  line-height: 2.4rem;
-}
-.news__article--text p {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
-.news__article--image img {
-  width: 100%;
-}
-
-/** Ticket styles */
-.ticket-list {
-  padding-bottom: 4vh;
-}
-
-.ticket-list__ticket {
-  border-bottom: 1px dashed #999999;
-}
-.ticket-list__ticket--select {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  font-size: 1rem;
-  font-weight: 500;
-  height: 5rem;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.ticket-select__name {
-  width: 30%;
-}
-.ticket-select__quantity {
-  width: 40%;
-  display: flex;
-  justify-content: center;
-}
-.ticket-select__quantity--block {
-  max-width: 150px;
-  margin: 0 auto;
-}
-.ticket-select__quantity--block input {
-  background-color: #ffffff;
-  width: 2rem;
-  background-color: #ffffff;
-  font-size: 1.2rem;
-  text-align: center;
-}
-.ticket-select__quantity .fa-minus {
-  margin-right: 0.75rem;
-  background-color: #999999;
-  border-radius: 4px;
-  padding: 0.45rem;
-  box-shadow: 5px 2px 2px #000000;
-  width: 1.75rem;
-  height: 1.75rem;
-  color: #000000;
-}
-.ticket-select__quantity .fa-minus:hover {
-  background-color: #00a4b0;
-  box-shadow: 2px 1px 1px #222222;
-}
-.ticket-select__quantity .fa-plus {
-  margin-left: 0.75rem;
-  border-radius: 4px;
-  background-color: #999999;
-  padding: 0.25rem;
-  box-shadow: 5px 2px 2px #000000;
-  border-radius: 4px;
-  background-color: #999999;
-  padding: 0.45rem;
-  box-shadow: 5px 2px 2px #000000;
-  width: 1.75rem;
-  height: 1.75rem;
-  color: #000000;
-}
-.ticket-select__quantity .fa-plus:hover {
-  background-color: #00a4b0;
-  box-shadow: 2px 1px 1px #222222;
-}
-.ticket-select__charge {
-  width: 30%;
-  text-align: right;
-}
-
-.ticket-totals {
-  max-width: 600px;
-  margin: 0 auto;
-}
-.ticket-totals__text {
-  text-align: center;
-}
-.ticket-totals__order {
-  text-align: center;
 }
 
 /** Footer styles */
-.footer__sidebar-socialmedia {
+.footer {
+  background-color: #222222;
+  font-size: 0.85rem;
+}
+.footer_column-wrapper {
+  padding: 0.25rem;
   display: flex;
-  justify-content: space-between;
-  width: 98%;
+  flex-direction: column;
 }
-.footer__sidebar-socialmedia a {
-  border-radius: 50%;
-  border: 2px solid white;
-  width: 1rem;
-  height: 1rem;
-  padding: 1.25rem;
+@media screen and (min-width: 768px) {
+  .footer_column-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .footer_column-wrapper--two {
+    width: 300px;
+  }
 }
-.footer__sidebar-socialmedia a svg {
-  position: relative;
-}
-.footer__sidebar-socialmedia a.socialmedia__facebook svg {
-  top: -0.7rem;
-  left: -0.35rem;
-}
-.footer__sidebar-socialmedia a.socialmedia__twitter svg {
-  top: -0.7rem;
-  left: -0.5rem;
-}
-.footer__sidebar-socialmedia a.socialmedia__instagram svg {
-  top: -0.7rem;
-  left: -0.5rem;
-}
-.footer__sidebar-socialmedia a.socialmedia__youtube svg {
-  top: -0.7rem;
-  left: -0.6rem;
-}
-.footer__sidebar-socialmedia a:hover {
-  background-color: #00a4b0;
+.footer_acknowledgement {
+  padding: 0.25rem;
 }
 
-/* Content styles accumulator */
-/* Show styles accumulator */
-/** Show Details style */
-.show-details {
-  line-height: 1.5rem;
-}
-.show-details p {
-  margin-top: 0.3rem;
-  margin-bottom: 0;
-}
-.show-details span {
-  font-weight: bold;
-}
-
-.show-dates__list {
-  padding-left: 0;
-}
-
-.show-date {
-  list-style: none;
+/** Styling for Theatre Address/Map */
+.footer__address {
+  background-color: #ffffff;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+}
+@media screen and (min-width: 768px) {
+  .footer__address {
+    flex-direction: row;
+  }
+  .footer__address div {
+    width: 50%;
+  }
+}
+
+/** Navigation styles */
+nav {
+  display: flex;
   flex-direction: row;
-  background-color: #999999;
-  border-bottom: 2px solid #222222;
-  padding-right: 5%;
-  height: 3rem;
+  justify-content: space-between;
+  padding: 0.25rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
-.show-date:hover {
-  background-color: #00a4b0;
-}
-.show-date__select {
-  width: 10%;
-}
-.show-date__date {
-  width: 50%;
-}
-.show-date__notes {
-  width: 35%;
-  font-size: 1rem;
-}
-
-/** Aggregate element styles */
-/** Button styles */
-.button {
-  padding: 0.25rem 0.5rem;
-  background-color: #00a4b0;
+nav a {
   color: #ffffff;
-  border-radius: 0.25rem;
+  font-size: 1rem;
+  text-decoration: none;
 }
-
-/*
-@import "partials/components.header";
-@import "partials/components.footer";
-@import "partials/components.site-nav";
-@import "partials/components.articles";
-@import "partials/components.buttons";
-@import "partials/components.forms";
-
-*/
+nav a.active {
+  color: #00a4b0;
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,12 @@
+/** Header Bar styles */
+
+.header-bar {
+    background-color: $UPVBlue;
+    height: 2.25rem;
+    text-align: center;
+    padding-top: 0.5rem;
+    a {
+        color: $UPVWhite;
+        text-decoration: none;
+    }
+}

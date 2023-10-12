@@ -1,0 +1,21 @@
+/** Footer styles */
+
+.footer {
+    background-color: $UPVDarkGrey;
+    font-size: 0.85rem;
+    &_column-wrapper {
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        @include screen-greater-than(tablet) {
+            flex-direction: row;
+            justify-content: space-between;
+            &--two {
+                width: 300px;
+            }
+        }
+    }
+    &_acknowledgement {
+        padding: 0.25rem;
+    }
+}

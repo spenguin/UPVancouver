@@ -1,0 +1,18 @@
+/** Navigation styles */
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.25rem;
+    max-width: 500px;
+    margin: 0 auto;
+    a {
+        color: $UPVWhite;
+        font-size: 1rem;
+        text-decoration: none;
+        &.active {
+            color: $UPVBlue;
+        }
+    }
+}
