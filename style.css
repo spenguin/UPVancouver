@@ -152,4 +152,48 @@ nav a.active {
   color: #00a4b0;
 }
 
+/** Show Content styling */
+@media screen and (min-width: 768px) {
+  .show {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.show__content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+@media screen and (min-width: 768px) {
+  .show__content {
+    width: 70%;
+    margin-right: 0;
+  }
+  .show__content .show__content--production {
+    display: none;
+  }
+}
+@media screen and (min-width: 992px) {
+  .show__content {
+    width: calc(100% - 250px);
+  }
+}
+.show__sidebar {
+  display: none;
+  margin-right: 2%;
+}
+@media screen and (min-width: 768px) {
+  .show__sidebar {
+    display: block;
+    width: 25%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .show__sidebar {
+    width: 250px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

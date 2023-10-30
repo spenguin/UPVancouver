@@ -25,6 +25,9 @@ if (!defined('_S_VERSION')) {
 	define('_S_VERSION', '1.0.0');
 }
 
+require_once CORE_INC . 'custom-posts.php';
+require_once CORE_INC . 'custom-settings.php';
+
 
 
  /**

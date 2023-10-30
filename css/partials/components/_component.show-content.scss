@@ -1,0 +1,36 @@
+/** Show Content styling */
+
+.show {
+    @include screen-greater-than(tablet) {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    &__content {
+        display: flex;
+        flex-direction:column;
+        margin-left: 2%;
+        margin-right: 2%;
+        @include screen-greater-than(tablet) {
+            width: 70%;
+            margin-right: 0;
+            .show__content--production {
+                display: none;
+            }
+        }
+        @include screen-greater-than(desktop) {
+            width: calc(100% - 250px);
+        }
+    }
+    &__sidebar {
+        display:none;
+        margin-right: 2%;
+        @include screen-greater-than(tablet) {
+            display: block;
+            width: 25%;
+        }
+        @include screen-greater-than(desktop) {
+            width: 250px;
+        }
+    }
+}
