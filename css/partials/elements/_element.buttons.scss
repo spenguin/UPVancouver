@@ -1,0 +1,14 @@
+// Button styles
+
+.button-medium {
+    display: block;
+    margin: 0 auto 1.5rem auto;
+    padding: 0.5rem 0.85rem;
+    border: 0;
+    border-radius: $btnRadius;
+}
+
+.button-gold {
+    background-color: $UPVGold;
+    color: $UPVDarkBlue;
+}

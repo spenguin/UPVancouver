@@ -196,4 +196,51 @@ nav a.active {
   }
 }
 
+/** Ticket Sales styles */
+.select-performance__list-item {
+  font-size: 1rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed white;
+  border-top: 1px dashed white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.performance__select--wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+/** Elements aggregator */
+/** Link styles */
+.internal-link {
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  background-color: #EC9A29;
+  display: block;
+  max-width: 250px;
+  margin: 0 auto;
+}
+@media screen and (min-width: 768px) {
+  .internal-link {
+    display: none;
+  }
+}
+
+.button-medium {
+  display: block;
+  margin: 0 auto 1.5rem auto;
+  padding: 0.5rem 0.85rem;
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+.button-gold {
+  background-color: #EC9A29;
+  color: #000d0e;
+}
+
 /*# sourceMappingURL=style.css.map */

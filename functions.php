@@ -19,6 +19,7 @@ define( 'CORE_PLUGINS_PATH', plugins_url() );
 define( 'CORE_WIDGET', CORE_INC . 'widgets/' );
 define( 'CORE_SHORTCODE', CORE_INC . 'shortcodes/' );
 define( 'CORE_VENDOR', CORE_PATH . 'vendor/' );
+define( 'CORE_DIST', CORE_URL . '/js/dist/' );
 
 if (!defined('_S_VERSION')) {
 	// Replace the version number of the theme on each release.
@@ -27,6 +28,8 @@ if (!defined('_S_VERSION')) {
 
 require_once CORE_INC . 'custom-posts.php';
 require_once CORE_INC . 'custom-settings.php';
+require_once CORE_INC . 'performance-functions.php';
+require_once CORE_INC . 'ticket-functions.php';
 
 
 

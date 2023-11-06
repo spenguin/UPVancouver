@@ -1,0 +1,24 @@
+/** Link styles */
+
+.internal-link {
+    text-decoration: none;
+    text-align: center;
+    color: $UPVWhite;
+    background-color: $UPVGold;
+    display: block;
+    max-width: 250px;
+    margin: 0 auto;
+    // &:after {
+    //     content: "";
+    //     border-bottom-color: transparent;
+    //     border-left-color: transparent;
+    //     border-right-color: transparent;
+    //     border-color: $UPVGold;
+    //     border-left: 100px;
+    //     border-right: 100px;
+    //     border-bottom: 10px;
+    // }
+    @include screen-greater-than(tablet) {
+        display: none;
+    }
+}

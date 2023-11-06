@@ -22,9 +22,11 @@
     "@babel/preset-react": "^7.22.5",
     "@wordpress/scripts": "^19.2.2",
     "babel-loader": "^9.1.2",
+    "css-loader": "^6.8.1",
     "dir-archiver": "^1.1.1",
     "node-sass": "^7.0.1",
     "rtlcss": "^3.5.0",
+    "style-loader": "^3.3.3",
     "webpack": "^5.87.0",
     "webpack-cli": "^5.1.4"
   },

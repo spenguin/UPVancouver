@@ -1,0 +1,20 @@
+/** Ticket Sales styles */
+// Appears on individual show pages and Season Ticket sales page
+
+
+
+.select-performance__list-item {
+    font-size: 1rem;
+    padding: 0.25rem 0;
+    border-bottom: 1px dashed white;
+    border-top: 1px dashed white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 350px;
+}
+
+.performance__select--wrapper {
+    display:flex;
+    flex-direction: row;
+}
