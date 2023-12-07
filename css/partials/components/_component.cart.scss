@@ -1,0 +1,17 @@
+/** Cart styles */
+
+.cart {
+    width: 100%;
+    &__quantity {
+        width: 20%;
+    }
+    &__item {
+        width: 55%;
+    }
+    &__charge {
+        width: 20%;
+    }
+    &__remove {
+        width: 5%;
+    }
+}

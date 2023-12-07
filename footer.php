@@ -26,12 +26,12 @@
             <p>Instagram or Facebook feed</p>
         </div>
         <div class="footer_column-wrapper--three">
-            <p>Social Media links</p>
+            <?php get_template_part('template-parts/footer-social-media'); ?>
         </div>                
     </div>
 
 
-</footer><!-- #colophon -->
+</footer><!-- #colophon .footer -->
 </div><!-- .container -->
 
 <?php wp_footer(); ?>

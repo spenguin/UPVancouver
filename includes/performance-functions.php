@@ -13,7 +13,7 @@
 
 function getPerformanceDates( $showId = NULL )
 {
-    if( is_null( $showId ) ) return [];
+    if( is_null( $showId ) || $showId < 0 ) return [];
     
     $args = [
         'post_type'     => 'performance',

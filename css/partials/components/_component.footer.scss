@@ -18,4 +18,97 @@
     &_acknowledgement {
         padding: 0.25rem;
     }
+    &__address {
+        color: $UPVDarkGrey;
+        padding-left:2%;
+        a {
+            color: $UPVGold;
+            text-decoration: none;
+            &:hover {
+                color: $UPVDarkGrey;
+            }
+        }
+        &--map {
+            padding-right:2%;
+            padding-top: 2%;
+            // position: relative;
+            // &-overlay {
+            //     width: 350px;
+            //     height: 450px;
+            //     background-color: rbga( 0,0,0,0.5);
+            //     position: absolute;
+            // }
+            a {
+                display: block;
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+    &__socialmedia {
+        display: flex;
+        justify-content: space-between;
+        @include screen-greater-than(tablet) {
+            flex-direction: column;
+        }
+        a {
+            border-radius: 50%;
+            border: 2px solid white;
+            width: 1rem;
+            height: 1rem;
+            padding: 1.25rem;
+            @include screen-greater-than(tablet) {
+                margin-bottom: 0.5rem;
+            }
+    
+            svg {
+                position: relative;
+                width: 30px;
+                height: 30px;                
+            }
+    
+            &.socialmedia__facebook svg {
+                top: -.80rem;
+                left: -0.95rem;
+            }
+    
+            &.socialmedia__twitter svg {
+                top: -.80rem;
+                left: -0.95rem;
+            }
+    
+            &.socialmedia__instagram svg {
+                top: -.90rem;
+                left: -0.9rem;
+            }
+    
+            &.socialmedia__youtube svg {
+                top: -.90rem;
+                left: -0.9rem;
+            }
+    
+            &:hover {
+                background-color: $UPVBlue;
+            }
+        }
+    }
+    &_column-wrapper {
+        &--one {
+            @include screen-greater-than(tablet) {
+                width: 45%;
+            }
+        }
+        &--two {
+            @include screen-greater-than(tablet) {
+                width: 45%;
+            }
+        }  
+        &--three {
+            @include screen-greater-than(tablet) {
+                width: 10%;
+                
+            }
+        }              
+    }
 }

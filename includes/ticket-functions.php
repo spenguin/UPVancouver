@@ -52,11 +52,14 @@
  * @author: John Anderson
  * @since: 7 August 2023
  * Get ticket details
- * @param (bool) Season tickets
+ * @param (int) Show Id - if -1, then Season Ticket
  * @return (array)
  */
-function getTickets( $seasonTickets = FALSE, $showCount = 1 )
+function getTickets( $showId )
 {
+    $seasonTickets  = $showId > 0 ? FALSE : TRUE;
+    $showCount      = $showId > 0 ? 1 : 2;  // Need to actually determine number of remaining shows in the season
+    
     $args = [
         'post_type' => 'ticket',
         'posts_per_page' => -1,

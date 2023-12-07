@@ -30,6 +30,9 @@ require_once CORE_INC . 'custom-posts.php';
 require_once CORE_INC . 'custom-settings.php';
 require_once CORE_INC . 'performance-functions.php';
 require_once CORE_INC . 'ticket-functions.php';
+require_once CORE_INC . 'site-functions.php';
+require_once CORE_INC . 'image-settings.php';
+require_once CORE_INC . 'navigation-settings.php';
 
 
 
