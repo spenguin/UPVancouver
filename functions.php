@@ -26,6 +26,8 @@ if (!defined('_S_VERSION')) {
 	define('_S_VERSION', '1.0.0');
 }
 
+require_once CORE_INC . 'tools.php';
+
 require_once CORE_INC . 'custom-posts.php';
 require_once CORE_INC . 'custom-settings.php';
 require_once CORE_INC . 'performance-functions.php';
@@ -33,6 +35,8 @@ require_once CORE_INC . 'ticket-functions.php';
 require_once CORE_INC . 'site-functions.php';
 require_once CORE_INC . 'image-settings.php';
 require_once CORE_INC . 'navigation-settings.php';
+require_once CORE_INC . 'show-functions.php';
+require_once CORE_INC . 'shortcodes.php';
 
 
 

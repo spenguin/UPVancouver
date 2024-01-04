@@ -1,0 +1,30 @@
+/** Styling for Page Content */
+
+.page-content {
+    color: $UPVGrey;
+    padding: 0.5rem;
+    padding: 4em 0.5rem;
+    background-color: $UPVWhite;
+    line-height: 1.6;
+    margin:0 0 0.625rem;
+    h2 {
+        text-align: left;
+        font-size: 1.75rem;
+        color: $UPVGrey;
+        padding-bottom: 1em;
+    }
+    h3 {
+        margin-bottom: 0;
+        font-size: 1.0rem;
+    }
+    &__grey {
+        color: $UPVBlack;
+        background-color: $UPVLightGrey;
+        // h2 {
+        //     color: $UPVBlack;
+        // }
+        // h3 {
+
+        // }
+    }
+}

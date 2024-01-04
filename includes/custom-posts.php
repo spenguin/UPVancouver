@@ -18,6 +18,8 @@ function initialize()
     // add_action('save_post_performance', '\CustomPosts\save_performance_meta');
     add_action('save_post_performance', '\CustomPosts\save_preview');
     add_action('save_post_performance', '\CustomPosts\save_talkback');
+    add_action('add_meta_boxes', '\CustomPosts\switch_excerpt_boxes');
+     
 }
 
 function custom_post_type()
@@ -150,7 +152,7 @@ function admin_init()
     add_meta_box('performance_preview_meta', 'Preview', '\CustomPosts\preview', 'performance', 'side');
     add_meta_box('performance_talkback_meta', 'Talkback', '\CustomPosts\talkback', 'performance', 'side');
     add_meta_box('show_promote_meta', 'Promote Show', '\CustomPosts\promote_show', 'show', 'side', 'high' );
-    add_meta_box('show_cast_meta', 'Show Cast & Crew', '\CustomPosts\show_cast', 'show' );
+    add_meta_box('show_cast_meta', 'Show Cast & Crew', '\CustomPosts\show_cast', 'show', 'side', 'high' );
 }
 
 
@@ -354,3 +356,78 @@ function save_show_cast()
     $show_cast  = isset( $_POST['show_cast'] ) ? $_POST['show_cast'] : '';
     update_post_meta($post->ID, 'show_cast', $show_cast );
 }
+
+/**
+ * Switches out Excerpt box and adds in one with TinyMCE
+ * https://wordpress.stackexchange.com/questions/58261/adding-a-rich-text-editor-to-excerpt
+ */
+function switch_excerpt_boxes()
+{
+    if ( ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )
+    {
+        return;
+    }  
+    if ( $GLOBALS['post']->post_type != "show") {
+        return;
+    }
+
+    remove_meta_box(
+        'postexcerpt',
+        'show',
+        'normal'
+    );
+
+    add_meta_box(
+        'postexcerpt2',
+        __('Excerpt'),
+        '\CustomPosts\showNewExcerpt',
+        'show',
+        'normal',
+        'core'
+    );
+}
+
+/**
+     * Output for the meta box.
+     *
+     * @param  object $post
+     * @return void
+     */
+    function showNewExcerpt( $post )
+    { 
+    ?>
+        <label class="screen-reader-text" for="excerpt"><?php
+        _e( 'Excerpt' )
+        ?></label>
+        <?php
+        // We use the default name, 'excerpt', so we don’t have to care about
+        // saving, other filters etc.
+        wp_editor(
+            \CustomPosts\unescape( $post->post_excerpt ),
+            'excerpt',
+            array (
+            'textarea_rows' => 15
+        ,   'media_buttons' => FALSE
+        ,   'teeny'         => TRUE
+        ,   'tinymce'       => TRUE
+            )
+        );
+    }
+
+    /**
+     * The excerpt is escaped usually. This breaks the HTML editor.
+     *
+     * @param  string $str
+     * @return string
+     */
+    function unescape( $str )
+    {
+        return str_replace(
+            array ( '&lt;', '&gt;', '&quot;', '&amp;', '&nbsp;', '&amp;nbsp;' )
+        ,   array ( '<',    '>',    '"',      '&',     ' ', ' ' )
+        ,   $str
+        );
+    }
+
+
+				

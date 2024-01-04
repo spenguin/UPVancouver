@@ -16,7 +16,7 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main"><?php pvd( get_post_type()); ?>
 	<?php
 	if (have_posts()) :
 
@@ -29,17 +29,11 @@ get_header();
 		endif;
 
 		/* Start the Loop */
-		while (have_posts()) :
-			the_post();
+		// while (have_posts()) :
 
-			/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-			get_template_part('template-parts/content', get_post_type());
+			get_template_part('template-parts/content-', get_post_type());
 
-		endwhile;
+		// endwhile;
 
 		the_posts_navigation();
 

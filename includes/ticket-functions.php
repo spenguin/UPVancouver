@@ -58,7 +58,7 @@
 function getTickets( $showId )
 {
     $seasonTickets  = $showId > 0 ? FALSE : TRUE;
-    $showCount      = $showId > 0 ? 1 : 2;  // Need to actually determine number of remaining shows in the season
+    $showCount      = $showId > 0 ? 1 : getActiveSeasonShowCount();  // Need to actually determine number of remaining shows in the season
     
     $args = [
         'post_type' => 'ticket',

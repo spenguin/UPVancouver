@@ -2,11 +2,13 @@
 
 .header-bar {
     background-color: $UPVBlue;
-    height: 2.25rem;
-    text-align: center;
-    padding-top: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     a {
         color: $UPVWhite;
         text-decoration: none;
+        display: block;
+        padding: 0.35rem 0;
     }
 }

@@ -1,0 +1,14 @@
+/** Style for Show Listings */
+
+.show-listing {
+    &__item {
+        color: $UPVWhite;
+        width: 95%;
+        max-width: 390px;
+        display: block;
+        text-decoration: none;
+        border: 1px solid $UPVLightGrey;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+    }
+}
