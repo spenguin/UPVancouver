@@ -1,0 +1,31 @@
+/** Section styles */
+.three-body .container {
+    display: flex!important;
+}
+
+.season {
+    @include screen-greater-than(desktop) {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.shopping-cart {
+    @include screen-greater-than(desktop) {
+        margin-bottom: 3rem;
+    }
+}
+
+.audition-details {
+    background-color: $UPVWhite;
+    margin-left: -25%;
+    margin-right: -25%;
+    padding: 1.5rem 25% 1.5rem 25%;
+}
+
+.artistic_director {
+    background-color: $UPVWhite;
+    margin-left: -25%;
+    margin-right: -25%;
+    padding: 1.5rem 25% 1.5rem 25%;
+}
