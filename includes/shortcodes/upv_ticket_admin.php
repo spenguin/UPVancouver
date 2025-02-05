@@ -8,17 +8,74 @@ function upv_ticket_admin()
 {
     if( isset($_GET['orderId']))
     {
-        
+        $order_id = filter_var($_GET['orderId'], FILTER_SANITIZE_NUMBER_INT); 
         
         // Get the order details from the orderId
+        $order = wc_get_order( $order_id ); 
+        $custom = get_post_custom($order_id); 
+
+
 
         ?>
-        <div class="ticket-admin max-wrapper__narrow">
-            <div class="ticket-admin__add">
+        <div class="ticket-admin">
+            <div class="ticket-admin__edit">
                 <h2>Edit Ticket Purchase</h2>
                 <?php if(!empty($message)): ?>
                     <div class="error"><?php echo $message; ?>
                 <?php endif; ?>
+                <?php 
+                    if( !isset($custom['custom_field_name']) )
+                    {
+                        echo '<p>Order not found</p>';
+                    } else {
+                        $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
+                        ?>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Ticket</td>
+                                    <td>Quantity</td>
+                                    <td>Performance</td>
+                                    <td>Charge</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php //var_dump($notes);
+                                foreach( $notes as $ticket_id => $note )
+                                { //var_dump($note);
+                                    $ticket = get_post($ticket_id); 
+                                    $term   = reset(get_the_terms($ticket_id, 'product_cat')); 
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $ticket->post_title; ?>
+                                            <?php 
+                                            if( "Uncategorized" != $term->name)
+                                            {
+                                                echo ' (' . $term->name . ')';
+                                            } ?>
+                                        </td>
+                                        <td><?php echo $note['quantity']; ?></td>
+                                        <td>
+                                            <?php 
+                                                if( in_array($term->slug, ['season-ticket', 'donation', "uncategorized"] ) )
+                                                {
+                                                    echo "N/A";
+                                                } else {
+                                                    // $performance = get_post_by_title($note['date'], '', 'performance' ); 
+                                                    $showTitle = get_show_title_by_performance_date($note['date']);
+                                                    echo $showTitle . ', ' . $note['date'] . ' ' . $note['time'];
+                                                }
+                                            ?>
+                                        </td>
+                                        <td>&dollar;<?php echo number_format($note['misha_custom_price'], 2); ?></td>
+                                    </tr>
+                                    <?php
+                                } ?>
+                            </tbody>
+                        </table>
+                        <?php
+                    }
+                ?>
             </div>
         </div>
 

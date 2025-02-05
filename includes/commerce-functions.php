@@ -18,6 +18,8 @@ add_action( 'woocommerce_after_order_notes', 'custom_checkout_field' );
 add_action('woocommerce_checkout_update_order_meta', 'custom_checkout_field_update_order_meta');
 add_action( 'init', 'misha_register_pay_at_box_office_status' );
 add_filter( 'wc_order_statuses', 'misha_add_status_to_list' );
+// add_action( 'woocommerce_email_order_meta', 'add_invoice_notes', 15 );
+
 
 
 function upv_add_donation_form()
@@ -151,5 +153,13 @@ function misha_add_status_to_list( $order_statuses ) {
 
 	$order_statuses[ 'wc-misha-pay-at-box-office' ] = 'Pay at Box Office';
 	return $order_statuses;
+}
 
+/**
+ * Add Notes to Customer Invoice
+ */
+function add_invoice_notes()
+{
+    $notes = get_post_by_title('Order notes');
+    return $notes;
 }

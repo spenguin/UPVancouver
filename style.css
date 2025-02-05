@@ -1104,4 +1104,9 @@ input[type=text] {
   justify-content: space-between;
 }
 
+/** Ticket Admin styles */
+.ticket-admin__edit table {
+  width: 100%;
+}
+
 /*# sourceMappingURL=style.css.map */

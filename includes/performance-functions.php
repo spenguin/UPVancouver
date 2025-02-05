@@ -55,3 +55,11 @@ function getPerformanceDates( $showId = NULL )
 
     return $o;
 }
+
+function get_show_title_by_performance_date( $date )
+{
+    $performance= get_post_by_title($date, '', 'performance' ); 
+    $showId     = get_post_meta($performance->ID,"show_id",true);
+    $show       = get_post( $showId );
+    return $show->post_title;
+}
