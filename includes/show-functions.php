@@ -6,15 +6,15 @@
 
 /**
  * Get season based on parameter passed
- * @param (str) 'current' or 'next'
- * @param (str) 'active', 'past', 'all'
+ * @param (str) 'current' or 'past'
  * @return (obj) season
  */
-function get_season_shows($which, $shows)
+function get_season_shows($which, $override=0)
 {
     global $wpdb;
 
-    $season = read_season(date('Y'));
+    $seasons = get_seasons(date('Y')); 
+    $compare = $which == 'past' ? '<' : '>=';
 
     $args   = [
         'post_type'         => 'show',
@@ -23,67 +23,82 @@ function get_season_shows($which, $shows)
             [
             'taxonomy'      => 'season',
             'field'         => 'slug',
-            'terms'         => $season[0]['slug']
+            'terms'         => $seasons[0]['slug']
             ]
         ],
         'meta_key'          => 'end_date',
         'meta_value'        => date('Y-m-d'),
-        'meta_compare'      => '>='
+        'meta_compare'      => $compare //'>='
     ];
-    $query  = new WP_Query( $args ); 
-    if( $query->post_count== 0) 
-    { 
-        if( $shows != 'past' ) {
-            $season     = read_season(date('Y', strtotime('+1 year')));
-        }
-    } elseif( $season == "next" ) {
-        $season = read_season(date('Y', strtotime('+1 year')));
-    }
 
-    $args   = [
-        'post_type'         => 'show',
-        'posts_per_page'    => -1,
-        'tax_query'         => [
-            [
-            'taxonomy'      => 'season',
-            'field'         => 'slug',
-            'terms'         => $season[0]['slug']
-            ]
-        ],
-        'meta_key'          => 'end_date',
-        'meta_value'        => date('Y-m-d'),
-        'orderby'           => 'meta_value_num',
-        'order'             => 'ASC'
-        // 'meta_compare'      => '>='
-    ];    
-    switch( $shows )
-    {
-        case 'past':
-            // $args['meta_key']       = 'end_date';
-            // $args['meta_value']     = date('Y-m-d');
-            $args['meta_compare']   = '<';
-            break;
-        case 'active':
-            // $args['meta_key']       = 'end_date';
-            // $args['meta_value']     = date('Y-m-d');
-            $args['meta_compare']   = '>=';
-            break;
-    }
-    $query  = new WP_Query( $args ); 
+    $query  = new WP_Query( $args ); //die(pvd($query->post_count) );
+    if( ( $query->post_count == 0 || $query->post_count == 5 ) && $which == 'past' ) return new stdClass();
+    if( $query->post_count < 5 && $which == 'past' ) return $query; 
+    if( $query->post_count > $override && $which != 'past' ) return $query;
+
+    $args['tax_query'][0]['terms'] = $seasons[1]['slug'];
+
+    $query  = new WP_Query( $args );
 
     return $query;
+
+
+
+    // if( $query->post_count== 0) 
+    // { 
+    //     if( $shows != 'past' ) {
+    //         $season     = read_season(date('Y', strtotime('+1 year')));
+    //     }
+    // } elseif( $season == "next" ) {
+    //     $season = read_season(date('Y', strtotime('+1 year')));
+    // }
+
+    // $args   = [
+    //     'post_type'         => 'show',
+    //     'posts_per_page'    => -1,
+    //     'tax_query'         => [
+    //         [
+    //         'taxonomy'      => 'season',
+    //         'field'         => 'slug',
+    //         'terms'         => $season[0]['slug']
+    //         ]
+    //     ],
+    //     'meta_key'          => 'end_date',
+    //     'meta_value'        => date('Y-m-d'),
+    //     'orderby'           => 'meta_value_num',
+    //     'order'             => 'ASC'
+    //     // 'meta_compare'      => '>='
+    // ];    
+    // switch( $shows )
+    // {
+    //     case 'past':
+    //         // $args['meta_key']       = 'end_date';
+    //         // $args['meta_value']     = date('Y-m-d');
+    //         $args['meta_compare']   = '<';
+    //         break;
+    //     case 'active':
+    //         // $args['meta_key']       = 'end_date';
+    //         // $args['meta_value']     = date('Y-m-d');
+    //         $args['meta_compare']   = '>=';
+    //         break;
+    // }
+    // $query  = new WP_Query( $args ); 
+
+    // return $query;
 }
 
 /**
- * Read Season from db
+ * Get Seasons from db,
+ * based on current year
+ * Seasons will be (Y - Y+1) or (Y-1 - Y)
  */
-function read_season($year)
+function get_seasons($year)
 {
     global $wpdb;
 
     $sql = $wpdb->prepare(
         "SELECT * FROM `wpba_terms` WHERE `slug` LIKE %s",
-        ['%' . $year]
+        ['%' . $year . '%']
     );
     return $wpdb->get_results( $sql , ARRAY_A ); 
 }

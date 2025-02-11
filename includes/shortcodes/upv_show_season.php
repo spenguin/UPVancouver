@@ -3,6 +3,7 @@
  * Present Shows
  * @param (str) season ['current','next']
  * @param (str) shows ['active', 'past', 'all']
+ * @param (int) override
  * @param (str) presentation ['tiles','list']
  * @returns (str) rendered presentation
  */
@@ -12,12 +13,12 @@ function upv_show_season($atts)
 
     extract(shortcode_atts(array(
         'season'        => 'current',
-        'shows'         => 'active',
+        'override'      => 0,
         'presentation'  => 'tiles'
-     ), $atts));
-    
+     ), $atts)); 
+
     // First, let's get the Season
-    $showObj    = get_season_shows($season, $shows); 
+    $showObj    = get_season_shows($season, $override); 
 
 
     // return;
