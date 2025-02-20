@@ -41,6 +41,7 @@ require_once CORE_INC . 'commerce-functions.php';
 require_once CORE_INC . 'show-functions.php';
 require_once CORE_INC . 'user-functions.php';
 require_once CORE_INC . 'admin-css.php';
+require_once CORE_INC . 'custom-show-settings.php';
 
 
  /**

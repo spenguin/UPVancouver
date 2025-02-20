@@ -9,12 +9,12 @@
  * @param (str) 'current' or 'past'
  * @return (obj) season
  */
-function get_season_shows($which, $override=0)
+function get_season_shows($which, $override=0, $shows)
 {
     global $wpdb;
 
     $seasons = get_seasons(date('Y')); 
-    $compare = $which == 'past' ? '<' : '>=';
+    $compare = $shows == 'past' ? '<' : '>='; 
 
     $args   = [
         'post_type'         => 'show',
@@ -28,7 +28,12 @@ function get_season_shows($which, $override=0)
         ],
         'meta_key'          => 'end_date',
         'meta_value'        => date('Y-m-d'),
-        'meta_compare'      => $compare //'>='
+        'meta_compare'      => $compare, //'>=',
+        'orderby'           => [
+            [
+                'meta_key'  => 'start_date'
+            ]
+        ]
     ];
 
     $query  = new WP_Query( $args ); //die(pvd($query->post_count) );

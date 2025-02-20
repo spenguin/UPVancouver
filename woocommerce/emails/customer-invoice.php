@@ -24,16 +24,18 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @hooked WC_Emails::email_header() Output the email header
  */
-do_action( 'woocommerce_email_header', $email_heading, $email ); ?>
+// do_action( 'woocommerce_email_header', $email_heading, $email ); 
+do_action( 'woocommerce_email_header', 'Your United Players order...', $email ); 
+?>
+
 
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-
 <p>
-<?php
-/* translators: %s Order date */
-printf( esc_html__( 'Here are the details of your order placed on %s:', 'woocommerce' ), esc_html( wc_format_datetime( $order->get_date_created() ) ) );
-?>
+	<?php $order_notes = unserialize(base64_decode(get_post_meta( $order->id, 'custom_field_name', TRUE ))); 
+	/* translators: %s Order date */
+	// printf( esc_html__( 'Here are the details of your order placed on %s:', 'woocommerce' ), esc_html( wc_format_datetime( $order->get_date_created() ) ) );
+	?>
 </p>
 
 <?php

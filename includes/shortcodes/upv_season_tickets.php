@@ -7,6 +7,8 @@
 
 function upv_season_tickets()
 {
+    $override = get_option('override'); 
+    if( $override ) return;
     // Which season are we in?
     $season = get_season_ticket_season();
     ob_start();

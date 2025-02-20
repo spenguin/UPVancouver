@@ -2,13 +2,15 @@
 /**
  * Header template part
  */
-$options    = get_option('performance_options');
+$options            = get_option('performance_options');
 $shoppingCartString = renderShoppingCartLogo();
+$override           = get_option('override'); 
 
-?>
-    <div class="header-bar">
-        <a href="/seasons-tickets"><?php echo $options['performance_field_season_ticket_string']; ?></a>
-    </div>
+    if( !$override ): ?>
+        <div class="header-bar">
+            <a href="/seasons-tickets"><?php echo $options['performance_field_season_ticket_string']; ?></a>
+        </div>
+    <?php endif; ?>
     <div class="primary-navigation">
         <div class="primary-navigation-wrapper max-wrapper">
             <div class="primary-navigation__left">

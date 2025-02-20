@@ -105,3 +105,24 @@ function getSingleShowTickets()
     return $o;
 
 }
+
+/**
+ * Loop through the Notes to get the email statement
+ * @param (array) order notes
+ * @return (str) email statement
+ */
+function generate_statement($notes)
+{
+    $statementOrder = [
+        'season-ticket' => 0,
+        'donation'      => 4
+    ];
+    
+    $o  = [];
+    foreach( $notes as $ticket_id => $note )
+    {
+        $ticket = get_post($ticket_id); 
+        $term   = reset(get_the_terms($ticket_id, 'product_cat')); 
+
+    }
+}
