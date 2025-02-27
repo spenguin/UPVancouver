@@ -5,6 +5,9 @@
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+    & > p {
+        width: 100%;
+    }
     @include screen-greater-than(desktop) {
         flex-direction: row;
         align-items: normal;

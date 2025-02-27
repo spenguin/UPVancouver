@@ -9,7 +9,7 @@ function show_settings_submenu(){
  
      add_submenu_page(
          'options-general.php', // parent page slug
-         'Display Upcoming Season Override Settings',
+         'Display Upcoming Season display_next_season Settings',
          'Show Settings',
          'manage_options',
          'show_settings',
@@ -24,7 +24,7 @@ function show_settings_submenu(){
         <h1><?php echo get_admin_page_title() ?></h1>
         <form method="post" action="options-general.php?page=show_settings">
             <?php
-                // settings_fields( 'show_override_settings' ); // settings group name
+                // settings_fields( 'show_display_next_season_settings' ); // settings group name
                 do_settings_sections( 'show_settings' ); // just a page slug
                 submit_button(); // "Save Changes" button
             ?>
@@ -32,9 +32,9 @@ function show_settings_submenu(){
     </div>
 
 <!-- 
-    <label for="override">New Season Shows Control<br>
-        <input type="radio" name="override" value="0"> Display New Season</input><br>
-        <input type="radio" name="override" value="1">Suppress New Season</input>
+    <label for="display_next_season">New Season Shows Control<br>
+        <input type="radio" name="display_next_season" value="0"> Display New Season</input><br>
+        <input type="radio" name="display_next_season" value="1">Suppress New Season</input>
     </label> -->
     <?php
 
@@ -73,15 +73,15 @@ function show_settings_fields(){
 function show_settings_radio( $args ) { //pvd($_POST);
     if( isset($_POST['submit']))
     {
-        $override = isset($_POST['override'] ) ? $_POST['override'] : 1; 
-        update_option('override', $override);
+        $display_next_season = isset($_POST['display_next_season'] ) ? $_POST['display_next_season'] : 1; 
+        update_option('display_next_season', $display_next_season);
     }
-	$override = get_option( 'override' );
+	$display_next_season = get_option( 'display_next_season' );
 	?>
 
 		<label>
-            <input type="radio" name="override" value="0" <?php echo ("0" == $override) ? 'checked' : ''; ?>> Display New Season</input><br>
-            <input type="radio" name="override" value="1" <?php echo ("1" == $override) ? 'checked' : ''; ?>> Suppress New Season</input>
+            <input type="radio" name="display_next_season" value="0" <?php echo ("0" == $display_next_season) ? 'checked' : ''; ?>> Display New Season</input><br>
+            <input type="radio" name="display_next_season" value="1" <?php echo ("1" == $display_next_season) ? 'checked' : ''; ?>> Suppress New Season</input>
 		</label>
 	<?php
 }

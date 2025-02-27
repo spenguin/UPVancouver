@@ -9,7 +9,7 @@
  * @param (str) 'current' or 'past'
  * @return (obj) season
  */
-function get_season_shows($which, $override=0, $shows)
+function get_season_shows($which, $override=0, $shows="current")
 {
     global $wpdb;
 

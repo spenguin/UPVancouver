@@ -17,8 +17,8 @@ function upv_show_season( $atts = [], $content = null, $tag = '' )
         'shows'         => 'active'
      ), $atts)); 
 
-    $override = get_option('override');
-    if( $override && $presentation == "list" )
+    $display_next_season = get_option('display_next_season');
+    if( $display_next_season && $presentation == "list" )
     {
         $announcement = get_post_by_title( 'Upcoming Season Announcement' );
         echo $announcement;

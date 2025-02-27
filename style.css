@@ -630,6 +630,9 @@ input[type=text] {
   align-items: center;
   flex-wrap: wrap;
 }
+.season > p {
+  width: 100%;
+}
 @media screen and (min-width: 1280px) {
   .season {
     flex-direction: row;
