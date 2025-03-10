@@ -59,7 +59,7 @@ defined( 'ABSPATH' ) || exit;
 						$performance = get_post_by_title( $item['date'], '', 'performance' );
 						$postId = $performance->ID;
 					}
-					$tickets_sold = get_post_meta( $postId, 'tickets_sold', TRUE );
+					$tickets_sold = get_post_meta( $orderId, 'tickets_sold', TRUE );
 					if( empty($tickets_sold) )
 					{
 						$tickets_sold	= [
@@ -70,7 +70,7 @@ defined( 'ABSPATH' ) || exit;
 					{
 						$tickets_sold[$orderId][$product_id]	= $item['quantity'];
 						$tickets_sold['count']					+= $item['quantity']; //die(pvd($tickets_sold));
-						update_post_meta( $postId, 'tickets_sold', $tickets_sold );
+						update_post_meta( $orderId, 'tickets_sold', $tickets_sold );
 					}
 				}
 

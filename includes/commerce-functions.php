@@ -33,9 +33,9 @@ function upv_session_cart_to_wc_cart()
 {
     if( !empty($_SESSION['cart'] ) ) {
         WC()->cart->empty_cart();
-        foreach($_SESSION['cart'] as $productId => $productData )
+        foreach($_SESSION['cart'] as $productData )
         {
-            WC()->cart->add_to_cart($productId, $productData['quantity'], 0, [], ['misha_custom_price' => $productData['misha_custom_price']] );
+            WC()->cart->add_to_cart($productData['product_id'], $productData['quantity'], 0, [], ['misha_custom_price' => $productData['misha_custom_price']] );
         }
     }
 }

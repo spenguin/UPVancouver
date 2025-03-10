@@ -22,7 +22,7 @@ if ( ! wc_coupons_enabled() ) { // @codingStandardsIgnoreLine.
 }
 
 ?>
-<?php
+<?php 
 	// Grab the order in the Session variables and write them to Woocommerce
 	// If $_SESSION['ticketsOrdered'] is empty or doesn't exist, offer a couple of options:
 	// - Continue Shopping

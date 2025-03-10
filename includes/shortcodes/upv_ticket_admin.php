@@ -11,10 +11,10 @@ function upv_ticket_admin()
         $order_id = filter_var($_GET['orderId'], FILTER_SANITIZE_NUMBER_INT); 
         
         // Get the order details from the orderId
-        $order = wc_get_order( $order_id ); 
+        $order = wc_get_order( $order_id ); //pvd($order );
         $custom = get_post_custom($order_id); 
 
-
+        $customer_note = $order->get_customer_note();
 
         ?>
         <div class="ticket-admin">
@@ -29,50 +29,75 @@ function upv_ticket_admin()
                         echo '<p>Order not found</p>';
                     } else {
                         $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
+                        $total  = 0;
                         ?>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>Ticket</td>
-                                    <td>Quantity</td>
-                                    <td>Performance</td>
-                                    <td>Charge</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php //var_dump($notes);
-                                foreach( $notes as $ticket_id => $note )
-                                { //var_dump($note);
-                                    $ticket = get_post($ticket_id); 
-                                    $term   = reset(get_the_terms($ticket_id, 'product_cat')); 
-                                    ?>
+                        <form>
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td><?php echo $ticket->post_title; ?>
-                                            <?php 
-                                            if( "Uncategorized" != $term->name)
-                                            {
-                                                echo ' (' . $term->name . ')';
-                                            } ?>
-                                        </td>
-                                        <td><?php echo $note['quantity']; ?></td>
-                                        <td>
-                                            <?php 
-                                                if( in_array($term->slug, ['season-ticket', 'donation', "uncategorized"] ) )
-                                                {
-                                                    echo "N/A";
-                                                } else {
-                                                    // $performance = get_post_by_title($note['date'], '', 'performance' ); 
-                                                    $showTitle = get_show_title_by_performance_date($note['date']);
-                                                    echo $showTitle . ', ' . $note['date'] . ' ' . $note['time'];
-                                                }
-                                            ?>
-                                        </td>
-                                        <td>&dollar;<?php echo number_format($note['misha_custom_price'], 2); ?></td>
+                                        <td>Ticket</td>
+                                        <td>Quantity</td>
+                                        <td>Performance</td>
+                                        <td>Charge</td>
                                     </tr>
-                                    <?php
-                                } ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php //pvd($notes);
+                                    foreach( $notes as $note )
+                                    { //var_dump($note);
+                                        $terms  = get_the_terms($note['product_id'], 'product_cat'); 
+                                        $term   = reset($terms); 
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $note['name'] ; ?>
+                                                <?php 
+                                                if( "Uncategorized" != $term->name)
+                                                {
+                                                    echo ' (' . $term->name . ')';
+                                                } ?>
+                                            </td>
+                                            <td><?php echo $note['quantity']; ?></td>
+                                            <td>
+                                                <?php 
+                                                    if( in_array($term->slug, ['season-ticket', 'donation', "uncategorized"] ) )
+                                                    {
+                                                        echo "N/A";
+                                                    } else {
+                                                        // $performance = get_post_by_title($note['date'], '', 'performance' ); 
+                                                        $showTitle = get_show_title_by_performance_date($note['date']);
+                                                        echo $note['showTitle'] . ', ' . $note['date'] . ' ' . $note['time'];
+                                                    }
+                                                ?>
+                                            </td>
+                                            <td>&dollar;<?php echo number_format($note['misha_custom_price'] * $note['quantity'], 2); ?></td>
+                                        </tr>
+                                        <?php $total += $note['misha_custom_price'] * $note['quantity'];
+                                    } ?>
+                                    <tr>
+                                        <td colspan="2">&nbsp;</td>
+                                        <td>Total:</td>
+                                        <td>&dollar;<?php echo number_format($total, 2); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Customer Note:<br/><?php echo $customer_note; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="admin_order_note">Order Note (Admin):</label><br>
+                                            <textarea name="admin_order_note" style="width:100%;"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <label for="admin_customer_note">Customer Note (Admin):</label><br>
+                                            <textarea name="admin_customer_note" style="width:100%;"></textarea>
+                                        </td>
+                                    </tr>  
+                                    <tr><td><input type="submit" name="submit" value="Submit" class="button button--action"/></td>
+                                    </tr>                              
+                                </tbody>
+                            </table>
+                        </form>
                         <?php
                     }
                 ?>
