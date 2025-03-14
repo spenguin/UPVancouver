@@ -163,3 +163,97 @@ function add_invoice_notes()
     $notes = get_post_by_title('Order notes');
     return $notes;
 }
+
+/**
+ * Render both the notes at the top of the email,
+ * and the details of the order
+ */
+function render_order_details($notes)
+{
+    $products_ordered   = [];
+    $orderTotal         = 0;
+    ob_start();
+    foreach( $notes as $args )
+    {
+        if( $args['quantity'] == 0 ) continue;
+        $showCharge = $args['quantity'] * $args['misha_custom_price'];
+        $orderTotal += $showCharge;
+        ?>
+        <tr>
+            <td>
+                <?php if( $args['name'] != 'Donation' ): ?>
+                    <?php echo $args['showTitle']; ?><br />
+                    <?php 
+                        if( $args['showTitle'] != 'Seasons Ticket' )
+                        {
+                            $products_ordered[] = ( 0 == $args['misha_custom_price'] ) ? "Subscriber" : "Show";
+                            echo $args['date']  . ' '  . date("g:i a", strtotime($args['time'])) . '<br />';
+                        } else {
+                            $products_ordered[] = "Season";
+                        }
+                        
+                        ?>
+                <?php else:
+                    $products_ordered[] = "Donation";
+                endif; ?>
+                <?php echo $args['name'] . ' $' . $args['misha_custom_price']; ?>
+            </td>
+            <td>
+                <?php echo $args['quantity']; ?>
+            </td>
+            <td>
+                $<?php echo $showCharge; ?>
+            </td>
+        </tr>   
+        <?php     
+    }
+    $o['table'] = ob_get_clean();
+    str_replace( "$", "$", $o['table'] );
+    $products_ordered = array_unique($products_ordered); 
+
+    if( in_array( "Show", $products_ordered ) )
+    {
+        $opening    = "Thank you for your purchase of ";
+    } elseif( in_array( "Season", $products_ordered ) ) 
+    {
+        $opening    = "Thank you for your purchase of ";
+    }
+    else 
+    {
+        $opening    = "Thank you for ";
+    }
+
+
+    if( in_array('Season', $products_ordered ) )
+    {
+        $order_str[] = "season ticket package(s)";
+        $second_str[]= "your season vouchers will be mailed out shortly";
+    } 
+    if( in_array('Subscriber', $products_ordered ) )
+    {
+        $order_str[] = "your season subscriber reservation(s)";
+        $second_str[]= "your tickets will be held for you at the box office under your last name";
+    } 
+    if( in_array('Show', $products_ordered ) )
+    {
+        $order_str[] = "your ticket purchase(s)";
+        $second_str[]= "your tickets will be held for you at the box office under your last name";
+    } 
+    if( in_array('Donation', $products_ordered ) )
+    {
+        $order_str[] = "your generous donation";
+        $second_str[]= "a tax receipt will be mailed to you in the next few days.";
+    } 
+    $last           = array_pop($order_str)  . '.<br><br>';
+    $second_str     = array_unique($second_str);
+    $second_last    = array_pop( $second_str );
+    $order_str      = $opening . ( empty($order_str) ? "" : join( ', ', $order_str ) . " and " ) . $last;
+    $order_str      .= "Your order is being processed: " .  ( empty($second_str) ? "" : join( ', ', $second_str ) . " and " ) . $second_last;
+
+
+
+    // $order_str      .= $last;
+    $o['order_str'] = $order_str;
+
+    return $o;
+}

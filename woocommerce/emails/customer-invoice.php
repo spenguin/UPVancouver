@@ -18,6 +18,10 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$order_id		= $order->get_id();
+$order_notes 	= unserialize(base64_decode(get_post_meta( $order_id, 'custom_field_name', TRUE )));
+$order_details_str	= render_order_details($order_notes);
+$customer_note 	= $order->get_customer_note();
 
 /**
  * Executes the e-mail header.
@@ -31,11 +35,29 @@ do_action( 'woocommerce_email_header', 'Your United Players order...', $email );
 
 <?php /* translators: %s: Customer first name */ ?>
 <p><?php printf( esc_html__( 'Hi %s,', 'woocommerce' ), esc_html( $order->get_billing_first_name() ) ); ?></p>
-<p>
-	<?php $order_notes = unserialize(base64_decode(get_post_meta( $order->id, 'custom_field_name', TRUE ))); 
+<!-- <p> -->
+	<?php //$order_notes = unserialize(base64_decode(get_post_meta( $order->id, 'custom_field_name', TRUE ))); 
+	
 	/* translators: %s Order date */
 	// printf( esc_html__( 'Here are the details of your order placed on %s:', 'woocommerce' ), esc_html( wc_format_datetime( $order->get_date_created() ) ) );
 	?>
+<!-- </p> -->
+<p><?php echo $order_details_str['order_str']; ?></p>
+<table cellspacing="0" cellpadding="6" border="1" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;width:100%;font-family:'Helvetica Neue',Helvetica,Roboto,Arial,sans-serif" width="100%">
+	<thead>
+		<tr>
+			<th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left" align="left">Product</th>
+			<th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left" align="left">Quantity</th>
+			<th scope="col" style="color:#636363;border:1px solid #e5e5e5;vertical-align:middle;padding:12px;text-align:left" align="left">Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php echo $order_details_str['table']; ?>
+	</tbody>
+</table>
+
+<p class="customer-note" style="border: 1px solid black; margin-top: 1rem; padding: 0.75rem;">
+	<?php echo $customer_note; ?>
 </p>
 
 <?php
@@ -47,7 +69,7 @@ do_action( 'woocommerce_email_header', 'Your United Players order...', $email );
  * @hooked WC_Structured_Data::output_structured_data() Outputs structured data.
  * @since 2.5.0
  */
-do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
+// do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_text, $email );
 
 /**
  * Hook for the woocommerce_email_order_meta.
@@ -56,7 +78,7 @@ do_action( 'woocommerce_email_order_details', $order, $sent_to_admin, $plain_tex
  */
 do_action( 'woocommerce_email_order_meta', $order, $sent_to_admin, $plain_text, $email );
 
-printf( add_invoice_notes() );
+// printf( add_invoice_notes() );
 
 /**
  * Hook for woocommerce_email_customer_details.
