@@ -23,6 +23,7 @@ function initialize()
     // add_action('save_post_performance', '\CustomPosts\save_performance_meta');
     add_action('save_post_performance', '\CustomPosts\save_preview');
     add_action('save_post_performance', '\CustomPosts\save_talkback');
+    add_action('save_post_performance', '\CustomPosts\save_soldout');
     // add_action('add_meta_boxes', '\CustomPosts\switch_excerpt_boxes');
     require_once 'custom-posts/custom-post-columns.php';
 }
@@ -208,6 +209,7 @@ function admin_init()
     add_meta_box('performance_meta', 'Performance Details', '\CustomPosts\performanceDetails', 'performance', 'side');
     add_meta_box('performance_preview_meta', 'Preview', '\CustomPosts\preview', 'performance', 'side');
     add_meta_box('performance_talkback_meta', 'Talkback', '\CustomPosts\talkback', 'performance', 'side');
+    add_meta_box('performance_soldout_meta', 'Sold Out', '\CustomPosts\soldout', 'performance', 'side');
     add_meta_box('performance_tickets_sold', 'Tickets Sold', '\CustomPosts\tickets_sold', 'performance', 'side' );
     add_meta_box('member_title', 'Title or Position', '\CustomPosts\member_title', 'member' );
     add_meta_box('show_seats', 'Show Seats', '\CustomPosts\show_seats', 'show', 'side' );
@@ -512,6 +514,24 @@ function save_show_production_photos()
     global $post;
     $show_production_photos  = isset( $_POST['show_production_photos'] ) ? $_POST['show_production_photos'] : '';
     update_post_meta($post->ID, 'show_production_photos', $show_production_photos );
+}
+
+function soldout()
+{
+    global $post;
+    $custom = get_post_custom( $post->ID );
+    $sold_out  = isset( $custom['sold_out'] ) ? $custom['sold_out'][0] : '';
+?>
+    <label for="sold_out">Performance Sold Out:</label>
+    <input type="checkbox" name="sold_out" value="1" <?php echo ((int) $sold_out == 1 ) ? 'checked="checked"' : ''; ?> />
+<?php
+}
+
+function save_soldout()
+{
+    global $post;
+    $sold_out = isset( $_POST['sold_out'] ) ? $_POST['sold_out'] : '';
+    update_post_meta($post->ID, 'sold_out', $sold_out );
 }
 
 function order_amend_link()

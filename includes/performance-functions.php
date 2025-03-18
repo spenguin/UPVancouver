@@ -45,7 +45,8 @@ function getPerformanceDates( $showId = NULL )
                 'date'      => $date,
                 'preview'   => isset($custom['preview']) ? $custom['preview'][0] : '',
                 'talkback'  => isset($custom['talkback']) ? $custom['talkback'][0] : '',
-                'performance_time'  => isset($custom['performance_time']) ? $custom['performance_time'][0] : ''
+                'performance_time'  => isset($custom['performance_time']) ? $custom['performance_time'][0] : '',
+                'sold_out'  => isset($custom['sold_out']) ? $custom['sold_out'][0] : ''
             ];
         endwhile;
     endif;
