@@ -16,6 +16,39 @@ function upv_ticket_admin()
 
         $customer_note = $order->get_customer_note();
 
+        $billing_email  = $order->get_billing_email(); 
+        $customer       = get_user_by( 'email', $billing_email ); 
+        $current_admin_user_note    = get_user_meta($customer->ID, 'user-notes-note', true);
+
+
+        $admin_order_notes = wc_get_order_notes([
+            'order_id' => $order_id
+         ]); 
+        if( strpos($admin_order_notes[0]->content, '[ta]') !== FALSE )
+        {
+            $admin_order_note = trim(substr($admin_order_notes[0]->content, 4 )); 
+        }
+
+        // Has there been any amendments?
+        if( isset($_POST['amend']) )
+        {
+            $admin_order_note = $_POST['admin_order_note']; // Do I need to sanitise this?
+            if( !empty($admin_order_note) && $admin_order_note != substr($admin_order_notes[0]->content, 4) )
+            {
+                $order->add_order_note( '[ta]' . $admin_order_note );
+            }
+
+            $admin_customer_note = $_POST['admin_customer_note']; // Sanitise?
+            if( !empty($admin_customer_note) && $current_admin_user_note != $admin_customer_note )
+            {
+                update_user_meta($customer->ID, 'user-notes-note', $admin_customer_note);
+            }
+            
+        }
+
+
+
+
         ?>
         <div class="ticket-admin">
             <div class="ticket-admin__edit">
@@ -31,7 +64,7 @@ function upv_ticket_admin()
                         $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
                         $total  = 0;
                         ?>
-                        <form>
+                        <form action="<?php echo get_bloginfo('url') . $_SERVER['REQUEST_URI']; ?>" method="post">
                             <table>
                                 <thead>
                                     <tr>
@@ -42,9 +75,9 @@ function upv_ticket_admin()
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php //pvd($notes);
+                                    <?php 
                                     foreach( $notes as $note )
-                                    { //var_dump($note);
+                                    { 
                                         $terms  = get_the_terms($note['product_id'], 'product_cat'); 
                                         $term   = reset($terms); 
                                         ?>
@@ -84,16 +117,16 @@ function upv_ticket_admin()
                                     <tr>
                                         <td colspan="2">
                                             <label for="admin_order_note">Order Note (Admin):</label><br>
-                                            <textarea name="admin_order_note" style="width:100%;"></textarea>
+                                            <textarea name="admin_order_note" style="width:100%;"><?php echo $admin_order_note; ?></textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
                                             <label for="admin_customer_note">Customer Note (Admin):</label><br>
-                                            <textarea name="admin_customer_note" style="width:100%;"></textarea>
+                                            <textarea name="admin_customer_note" style="width:100%;"><?php echo $admin_customer_note; ?></textarea>
                                         </td>
                                     </tr>  
-                                    <tr><td><input type="submit" name="submit" value="Submit" class="button button--action"/></td>
+                                    <tr><td><input type="submit" name="amend" value="Amend Order" class="button button--action"/></td>
                                     </tr>                              
                                 </tbody>
                             </table>
