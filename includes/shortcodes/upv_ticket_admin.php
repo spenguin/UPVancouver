@@ -14,14 +14,17 @@ function upv_ticket_admin()
         $order = wc_get_order( $order_id ); //pvd($order );
         $custom = get_post_custom($order_id); 
 
+        $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
+
         $customer_note = $order->get_customer_note();
 
         $billing_email  = $order->get_billing_email(); 
         $customer       = get_user_by( 'email', $billing_email ); 
         $current_admin_user_note    = get_user_meta($customer->ID, 'user-notes-note', true);
 
-
-        $admin_order_notes = wc_get_order_notes([
+        $admin_order_note   = '';
+        $admin_customer_note= '';
+        $admin_order_notes  = wc_get_order_notes([
             'order_id' => $order_id
          ]); 
         if( strpos($admin_order_notes[0]->content, '[ta]') !== FALSE )
@@ -43,12 +46,28 @@ function upv_ticket_admin()
             {
                 update_user_meta($customer->ID, 'user-notes-note', $admin_customer_note);
             }
-            
+
+            // Any changes to performance dates
+            if( isset($_POST['date']))
+            {
+                $changed    = FALSE;
+                foreach($_POST['date'] as $key => $date )
+                {
+                    if( $notes[$key]['date'] != $date )
+                    {
+                        $changed = TRUE;
+                        $notes[$key]['date'] = $date;
+                    }
+                }
+                if( $changed )
+                {
+                    $notes['msg'] = "changed";
+                    $notes = base64_encode(serialize($notes));
+                    update_post_meta($order_id, 'custom_field_name', $notes );
+                } 
+
+            }
         }
-
-
-
-
         ?>
         <div class="ticket-admin">
             <div class="ticket-admin__edit">
@@ -61,7 +80,7 @@ function upv_ticket_admin()
                     {
                         echo '<p>Order not found</p>';
                     } else {
-                        $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
+                        
                         $total  = 0;
                         ?>
                         <form action="<?php echo get_bloginfo('url') . $_SERVER['REQUEST_URI']; ?>" method="post">
@@ -76,8 +95,8 @@ function upv_ticket_admin()
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    foreach( $notes as $note )
-                                    { 
+                                    foreach( $notes as $key => $note )
+                                    { //pvd($note);
                                         $terms  = get_the_terms($note['product_id'], 'product_cat'); 
                                         $term   = reset($terms); 
                                         ?>
@@ -95,10 +114,16 @@ function upv_ticket_admin()
                                                     if( in_array($term->slug, ['season-ticket', 'donation', "uncategorized"] ) )
                                                     {
                                                         echo "N/A";
-                                                    } else {
-                                                        // $performance = get_post_by_title($note['date'], '', 'performance' ); 
-                                                        $showTitle = get_show_title_by_performance_date($note['date']);
-                                                        echo $note['showTitle'] . ', ' . $note['date'] . ' ' . $note['time'];
+                                                    } else { 
+                                                        if( strtotime($note['date']) < time() )
+                                                        {
+                                                            echo $note['showTitle'] . ' ' . $note['date'] . ' ' . $note['time'];
+                                                        }
+                                                        else 
+                                                        {
+                                                            echo $note['showTitle'] . ', <select name="date[' . $key . ']">' . organise_performance_dates($note['showTitle'], $note['date']) . '</select>';
+                                                        }
+
                                                     }
                                                 ?>
                                             </td>
@@ -329,3 +354,19 @@ function upv_ticket_admin()
     }
 }
 
+/**
+ * Organise performance dates into a dropdown
+ */
+function organise_performance_dates( $showTitle, $date )
+{
+    $date = strtotime($date);  
+    $show           = get_post_by_title($showTitle, NULL, 'show' ); 
+    $performances   = getPerformanceDates( $show->ID ); 
+    $o              = [];
+    foreach( $performances as $performance)
+    {   
+        $selected   = ($performance['date'] == $date) ? 'selected="selected"' : '';
+        $o[]        = "<option value='" . $performance['date'] . "' " . $selected  . ">" . date('j M Y', $performance['date'] ) . " " . $performance['performance_time'] . "</option>";
+    }
+    return join( '', $o );
+}
