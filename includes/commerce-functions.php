@@ -173,8 +173,13 @@ function render_order_details($notes)
     $products_ordered   = [];
     $orderTotal         = 0;
     ob_start();
-    foreach( $notes as $args )
+    foreach( $notes as $key => $args )
     {
+        if( $key == 'amended' )
+        {
+            $amendedStr = $key ? 'This is an amended order. You have not been charged again.<br />' : '';
+            continue;
+        }
         if( $args['quantity'] == 0 ) continue;
         $showCharge = $args['quantity'] * $args['misha_custom_price'];
         $orderTotal += $showCharge;
@@ -247,10 +252,8 @@ function render_order_details($notes)
     $last           = array_pop($order_str)  . '.<br><br>';
     $second_str     = array_unique($second_str);
     $second_last    = array_pop( $second_str );
-    $order_str      = $opening . ( empty($order_str) ? "" : join( ', ', $order_str ) . " and " ) . $last;
+    $order_str      = $amendedStr . $opening . ( empty($order_str) ? "" : join( ', ', $order_str ) . " and " ) . $last;
     $order_str      .= "Your order is being processed: " .  ( empty($second_str) ? "" : join( ', ', $second_str ) . " and " ) . $second_last;
-
-
 
     // $order_str      .= $last;
     $o['order_str'] = $order_str;

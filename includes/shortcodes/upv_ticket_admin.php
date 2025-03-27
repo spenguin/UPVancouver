@@ -14,7 +14,7 @@ function upv_ticket_admin()
         $order = wc_get_order( $order_id ); //pvd($order );
         $custom = get_post_custom($order_id); 
 
-        $notes  = unserialize(base64_decode($custom['custom_field_name'][0]));
+        $notes  = unserialize(base64_decode($custom['custom_field_name'][0])); 
 
         $customer_note = $order->get_customer_note();
 
@@ -53,15 +53,15 @@ function upv_ticket_admin()
                 $changed    = FALSE;
                 foreach($_POST['date'] as $key => $date )
                 {
-                    if( $notes[$key]['date'] != $date )
+                    if( $notes[$key]['date'] != date('j M Y',$date ) )
                     {
                         $changed = TRUE;
-                        $notes[$key]['date'] = $date;
+                        $notes[$key]['date'] = date('j M Y',$date );
                     }
                 }
                 if( $changed )
                 {
-                    $notes['msg'] = "changed";
+                    $notes['amended'] = "changed";
                     $notes = base64_encode(serialize($notes));
                     update_post_meta($order_id, 'custom_field_name', $notes );
                 } 
@@ -96,7 +96,8 @@ function upv_ticket_admin()
                                 <tbody>
                                     <?php 
                                     foreach( $notes as $key => $note )
-                                    { //pvd($note);
+                                    { 
+                                        if( $key == "amended" ) continue;
                                         $terms  = get_the_terms($note['product_id'], 'product_cat'); 
                                         $term   = reset($terms); 
                                         ?>
