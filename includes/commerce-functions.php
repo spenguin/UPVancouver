@@ -172,6 +172,7 @@ function render_order_details($notes)
 {
     $products_ordered   = [];
     $orderTotal         = 0;
+    $amendedStr         = '';
     ob_start();
     foreach( $notes as $key => $args )
     {
