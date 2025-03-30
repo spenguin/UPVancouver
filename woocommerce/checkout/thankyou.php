@@ -73,7 +73,8 @@ defined( 'ABSPATH' ) || exit;
 						update_post_meta( $orderId, 'tickets_sold', $tickets_sold );
 					}
 				}
-
+				// Change order status to completed
+				$order->update_status('completed');
             
             ?>
 			<?php wc_get_template( 'checkout/order-received.php', array( 'order' => $order ) ); ?>
