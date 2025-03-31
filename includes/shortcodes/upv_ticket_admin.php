@@ -53,17 +53,20 @@ function upv_ticket_admin()
                 $changed    = FALSE;
                 foreach($_POST['date'] as $key => $date )
                 {
-                    if( $notes[$key]['date'] != date('j M Y',$date ) )
+                    if( $notes[$key]['date'] != ($new_date = date('j M Y',$date ) ) )
                     {
-                        $changed = TRUE;
-                        $notes[$key]['date'] = date('j M Y',$date );
+                        $changed    = TRUE;
+                        $performance= get_post_by_title( $new_date, NULL, 'performance' );
+                        $time       = get_post_meta($performance->ID, 'performance_time', TRUE );
+                        $notes[$key]['date'] = $new_date;
+                        $notes[$key]['time'] = $time;
                     }
                 }
                 if( $changed )
                 {
-                    $notes['amended'] = "changed";
-                    $notes = base64_encode(serialize($notes));
-                    update_post_meta($order_id, 'custom_field_name', $notes );
+                    $notes['amended']   = "changed";
+                    $notes_encoded      = base64_encode(serialize($notes));
+                    update_post_meta($order_id, 'custom_field_name', $notes_encoded );
                 } 
 
             }

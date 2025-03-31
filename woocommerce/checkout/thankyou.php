@@ -43,7 +43,17 @@ defined( 'ABSPATH' ) || exit;
             <?php
 				$orderId 	= $order->get_id(); 
 				$order		= wc_get_order( $orderId ); 
-				$user		= $order->get_user(); //pvd($user);
+				$user		= $order->get_user(); 
+				if( $user == FALSE )
+				{
+					$email = $order->get_billing_email();
+					wp_insert_user([
+						'user_pass'	=> wp_generate_password(),
+						'user_login'=> $email,
+						'user_email'=> $email,
+						'role'		=> 'attendee'
+					]);
+				}
 
 				$cart 		= get_post_meta( $orderId, "custom_field_name", TRUE ); //die(pvd($cart));
 				$cart		= unserialize( base64_decode( $cart ) ); 
