@@ -208,6 +208,7 @@ function upv_ticket_admin()
                 // Get user
 
                 $email  = filter_var($_POST['userEmail'], FILTER_SANITIZE_EMAIL);
+                $phone  = filter_var($_POST['userPhone'], FILTER_SANITIZE_STRING );
 
                 // User already exist            
                 $user = get_user_by( 'email', $email );
@@ -228,6 +229,7 @@ function upv_ticket_admin()
                 $order          = new WC_Order( $email );
                 $order->set_created_via( $email ); 
                 $order->set_customer_id( $user->ID ); 
+                $order->set_billing_phone($phone );
 
                 $note           = htmlspecialchars( $_POST['notes'], ENT_QUOTES );
                 $order->add_order_note( $note );
@@ -239,29 +241,11 @@ function upv_ticket_admin()
                 {
                     if( !empty($_POST[$ticketName] ) )
                     {
-                        // WC()->cart->add_to_cart( $ticketId, $_POST[$ticketName], 0, [], ['misha_custom_price' => '0'] );
                         $order->add_product( wc_get_product( $ticketId ), $_POST[$ticketName] );
-                        // WC()->cart->add_to_cart( 182, 2, 0, [], ['misha_custom_price' => '0'] );
                         $tickets_ordered[$ticketId] = $_POST[$ticketName];
                         $ordered_count              += $_POST[$ticketName];
                     }
                 }
-        //         $address = [
-        //             'first_name'    => 'Test',
-        //             'last_name'     => 'Testerton',
-        //             'company'       => '',
-        //             'email'         => 'test@testerton.com',
-        //             'phone'         => '604 861 1234',
-        //             'address_1'     => '123 Any Street',
-        //             'address_2'     => '',
-        //             'city'          => "Vancouver",
-        //             'state'         => 'BC',
-        //             'postcode'      => 'V1A 1A1',
-        //             'country'       => 'CA'
-        //         ];            
-
-        // $order->set_address( $address, 'billing' );
-        // $order->set_address( $address, 'shipping' );
 
                 $order->calculate_totals();
                 $payment_status = $_POST['payment'] ? 'wc-completed' : 'wc-pending'; 
@@ -285,7 +269,8 @@ function upv_ticket_admin()
             }
         }
         $userName   = isset($_POST['userName'] ) ? $_POST['userName'] : '';
-        $userEmail  = isset($_POST['userEmail'] ) ? $_POST['userEmail'] : '';
+        $userEmail  = isset($_POST['userEmail'] ) ? $_POST['userEmail'] : 'info@weirdspace.com';
+        $userPhone  = isset($_POST['userPhone'] ) ? $_POST['userPhone'] : '';
 
         ?>
         <div class="ticket-admin max-wrapper__narrow">
@@ -313,6 +298,7 @@ function upv_ticket_admin()
                     <label for="performance_date">Which performance date:&nbsp;<input type="date" name="performance_date" placeholder="Performance date" required value="<?php echo $date; ?>" /></label>
                     <label for="userName">Name:<input type="text" name="userName" placeholder="Buyer name" value="<?php echo $userName; ?>" required/></label>
                     <label for="userEmail">Email:<input type="email" name="userEmail" placeholder="Buyer email" value="<?php echo $userEmail; ?>" required/></label>
+                    <label for="userPhone">Email:<input type="text" name="userPhone" placeholder="Buyer telephone" value="<?php echo $userPhone; ?>" required/></label>                    
                     <label>Tickets ordered:
                         <div class="upv-form__short-text"><input type="text" name="seasons" value="<?php echo isset($_POST['seasons']) ? $_POST['seasons'] : ''; ?>"> Seasons tickets</div>
                         <div class="upv-form__short-text"><input type="text" name="adult" value="<?php echo isset($_POST['adult']) ? $_POST['adult'] : ''; ?>"> Adult tickets</div>
