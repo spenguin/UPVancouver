@@ -35,13 +35,13 @@ function upv_ticket_admin()
         // Has there been any amendments?
         if( isset($_POST['amend']) )
         {
-            $admin_order_note = $_POST['admin_order_note']; // Do I need to sanitise this?
+            $admin_order_note = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES ); 
             if( !empty($admin_order_note) && $admin_order_note != substr($admin_order_notes[0]->content, 4) )
             {
                 $order->add_order_note( '[ta]' . $admin_order_note );
             }
 
-            $admin_customer_note = $_POST['admin_customer_note']; // Sanitise?
+            $admin_customer_note = htmlspecialchars( $_POST['admin_customer_note'], ENT_QUOTES ); 
             if( !empty($admin_customer_note) && $current_admin_user_note != $admin_customer_note )
             {
                 update_user_meta($customer->ID, 'user-notes-note', $admin_customer_note);
@@ -231,8 +231,15 @@ function upv_ticket_admin()
                 $order->set_customer_id( $user->ID ); 
                 $order->set_billing_phone($phone );
 
-                $note           = htmlspecialchars( $_POST['notes'], ENT_QUOTES );
-                $order->add_order_note( $note );
+                $admin_order_note   = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES );
+                $order->add_order_note( '[ta]' . $admin_order_note );
+
+                $admin_customer_note = htmlspecialchars( $_POST['admin_customer_note'], ENT_QUOTES ); // Sanitise?
+                if( !empty($admin_customer_note) )
+                {
+                    update_user_meta($user->ID, 'user-notes-note', $admin_customer_note);
+                }
+                // $order->add_order_note( $note );
 
                 $tickets_ordered    = [];
                 $ordered_count      = 0;
@@ -298,7 +305,7 @@ function upv_ticket_admin()
                     <label for="performance_date">Which performance date:&nbsp;<input type="date" name="performance_date" placeholder="Performance date" required value="<?php echo $date; ?>" /></label>
                     <label for="userName">Name:<input type="text" name="userName" placeholder="Buyer name" value="<?php echo $userName; ?>" required/></label>
                     <label for="userEmail">Email:<input type="email" name="userEmail" placeholder="Buyer email" value="<?php echo $userEmail; ?>" required/></label>
-                    <label for="userPhone">Email:<input type="text" name="userPhone" placeholder="Buyer telephone" value="<?php echo $userPhone; ?>" required/></label>                    
+                    <label for="userPhone">Telephone:<input type="text" name="userPhone" placeholder="Buyer telephone" value="<?php echo $userPhone; ?>" required/></label>                    
                     <label>Tickets ordered:
                         <div class="upv-form__short-text"><input type="text" name="seasons" value="<?php echo isset($_POST['seasons']) ? $_POST['seasons'] : ''; ?>"> Seasons tickets</div>
                         <div class="upv-form__short-text"><input type="text" name="adult" value="<?php echo isset($_POST['adult']) ? $_POST['adult'] : ''; ?>"> Adult tickets</div>
@@ -312,8 +319,11 @@ function upv_ticket_admin()
                         <div class="upv-form__short-text"><input type="radio" name="payment"  value="0" <?php echo $payment == 0 ? "checked" : ''; ?>> Pay at Box Office</div>
                         <!-- <div class="upv-form__short-text"><input type="radio" name="payment" class="short-text"> Comp</div> -->
                     </label>  
-                    <label for="notes">Notes: (required for Comp tickets)
-                        <textarea name="notes" ><?php echo isset($_POST['notes']) ? $_POST['notes'] : ''; ?></textarea>
+                    <label for="admin_order_note">Order Note (Admin): (required for Comp tickets)
+                        <textarea name="admin_order_note" ><?php echo isset($_POST['admin_order_note']) ? $_POST['admin_order_note'] : ''; ?></textarea>
+                    </label>
+                    <label for="admin_customer_note">Customer Note (Admin):
+                        <textarea name="admin_customer_note" ><?php echo isset($_POST['admin_customer_note']) ? $_POST['admin_customer_note'] : ''; ?></textarea>
                     </label>
                         
                     <input type="submit" class="button" name="add_order" value="Submit" />
