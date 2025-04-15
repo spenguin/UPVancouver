@@ -8,29 +8,20 @@ function upv_ticket_admin()
 {
     if( isset($_GET['orderId']))
     {
-        $order_id = filter_var($_GET['orderId'], FILTER_SANITIZE_NUMBER_INT); 
+        $order_id = filter_var($_GET['orderId'], FILTER_SANITIZE_NUMBER_INT);
         
         // Get the order details from the orderId
-        $order = wc_get_order( $order_id ); //pvd($order );
-        $custom = get_post_custom($order_id); 
+        $order = wc_get_order( $order_id );
 
-        $notes  = unserialize(base64_decode($custom['custom_field_name'][0])); 
+        $order_note     = get_order_note( $order_id ); pvd($order_note);
+        $customer_note  = $order->get_customer_note();
 
-        $customer_note = $order->get_customer_note();
+        $customer       = get_order_customer( $order ); 
 
-        $billing_email  = $order->get_billing_email(); 
-        $customer       = get_user_by( 'email', $billing_email ); 
         $current_admin_user_note    = get_user_meta($customer->ID, 'user-notes-note', true);
 
-        $admin_order_note   = '';
-        $admin_customer_note= '';
-        $admin_order_notes  = wc_get_order_notes([
-            'order_id' => $order_id
-         ]); 
-        if( strpos($admin_order_notes[0]->content, '[ta]') !== FALSE )
-        {
-            $admin_order_note = trim(substr($admin_order_notes[0]->content, 4 )); 
-        }
+        $admin_customer_note    = '';
+        $admin_order_note       = set_admin_order_note($order_id); 
 
         // Has there been any amendments?
         if( isset($_POST['amend']) )
@@ -171,8 +162,7 @@ function upv_ticket_admin()
     } else {
 
         $show_titles    = get_show_titles();
-        $tickets        = getSingleShowTickets(); //pvd($tickets);
-
+        $tickets        = getSingleShowTickets(); 
 
         $message        = "";
 
@@ -196,7 +186,8 @@ function upv_ticket_admin()
                 $message    = "Comp tickets require explanatory note.";
             }
             // Need to confirm that the date is an actual performance date
-            $performance = get_post_by_title( date('j M Y', strtotime($_POST['performance_date']) ), '', 'performance' );
+            $performance    = get_post_by_title( date('j M Y', strtotime($_POST['performance_date']) ), '', 'performance' );
+            $time           = get_post_meta($performance->ID, 'performance_time', TRUE );
             if( is_null($performance) )
             {
                 $error      = TRUE;
@@ -208,7 +199,7 @@ function upv_ticket_admin()
                 // Get user
 
                 $email  = filter_var($_POST['userEmail'], FILTER_SANITIZE_EMAIL);
-                $phone  = filter_var($_POST['userPhone'], FILTER_SANITIZE_STRING );
+                $phone  = filter_var($_POST['userPhone'], FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 
                 // User already exist            
                 $user = get_user_by( 'email', $email );
@@ -243,22 +234,39 @@ function upv_ticket_admin()
 
                 $tickets_ordered    = [];
                 $ordered_count      = 0;
-                
+                $order_note         = [];
+
                 foreach( $tickets as $ticketId => $ticketName )
                 {
                     if( !empty($_POST[$ticketName] ) )
                     {
-                        $order->add_product( wc_get_product( $ticketId ), $_POST[$ticketName] );
+                        $product    = wc_get_product( $ticketId );
+                        $order->add_product( $product, $_POST[$ticketName] );
                         $tickets_ordered[$ticketId] = $_POST[$ticketName];
                         $ordered_count              += $_POST[$ticketName];
+                        
+
+                        // $price = get_post_meta( $ticketId, 'misha_custom_price', TRUE );
+                        // $performance                = get_post_by_title();
+                        $order_note[]   = [
+                            'product_id'    => $ticketId,
+                            'quantity'      => $_POST[$ticketName],
+                            'date'          => date('j M Y', strtotime($_POST['performance_date'])),
+                            'time'          => $time,
+                            'showTitle'     => $_POST['show_title'],
+                            'misha_custom_price' => $product->get_price(),
+                            'name'          => ucfirst($ticketName)
+                        ];
                     }
                 }
 
-                $order->calculate_totals();
-                $payment_status = $_POST['payment'] ? 'wc-completed' : 'wc-pending'; 
+                $order->calculate_totals(); 
+                $orderId = $order->save(); 
 
-                $order->set_status( $payment_status );
-                $orderId = $order->save(); //die(pvd($order));
+                set_order_note( $orderId, $order_note );
+
+                $payment_status = $_POST['payment'] ? 'completed' : 'pending'; 
+                $order->update_status( $payment_status );
 
                 // Add order to Performance
                 $tickets_sold = get_post_meta( $performance->ID, 'tickets_sold', TRUE ); 
@@ -294,9 +302,9 @@ function upv_ticket_admin()
                                 foreach( $show_titles as $show_id => $show_name )
                                 {   
                                     $selected = "";
-                                    if( isset($_POST['show_title'] ) && $_POST['show_title'] == $show_id ) $selected = "selected";
+                                    if( isset($_POST['show_title'] ) && $_POST['show_title'] == $show_name ) $selected = "selected";
                                     ?>
-                                        <option value="<?php echo $show_id; ?>" <?php echo $selected; ?>><?php echo $show_name; ?></option>
+                                        <option value="<?php echo $show_name; ?>" <?php echo $selected; ?>><?php echo $show_name; ?></option>
                                     <?php
                                 } ?>
                         </select>

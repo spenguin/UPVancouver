@@ -169,13 +169,13 @@ function add_invoice_notes()
  * and the details of the order
  */
 function render_order_details($notes)
-{
+{ 
     $products_ordered   = [];
     $orderTotal         = 0;
     $amendedStr         = '';
     ob_start();
     foreach( $notes as $key => $args )
-    {
+    { 
         if( $key == 'amended' )
         {
             $amendedStr = $key ? 'This is an amended order. You have not been charged again.<br />' : '';
@@ -214,7 +214,7 @@ function render_order_details($notes)
         <?php     
     }
     $o['table'] = ob_get_clean();
-    str_replace( "$", "$", $o['table'] );
+    str_replace( "$", "$", $o['table'] ); 
     $products_ordered = array_unique($products_ordered); 
 
     if( in_array( "Show", $products_ordered ) )

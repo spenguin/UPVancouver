@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $order_id		= $order->get_id();
-$order_notes 	= unserialize(base64_decode(get_post_meta( $order_id, 'custom_field_name', TRUE )));
+$order_notes 	= get_order_note( $order_id ); //unserialize(base64_decode(get_post_meta( $order_id, 'custom_field_name', TRUE )));
 $order_details_str	= render_order_details($order_notes);
 $customer_note 	= $order->get_customer_note();
 
