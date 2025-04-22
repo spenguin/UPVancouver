@@ -200,6 +200,7 @@ function upv_ticket_admin()
 
                 $email  = filter_var($_POST['userEmail'], FILTER_SANITIZE_EMAIL);
                 $phone  = filter_var($_POST['userPhone'], FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+                $userName   = filter_var($_POST['userName'], FILTER_SANITIZE_FULL_SPECIAL_CHARS ); 
 
                 // User already exist            
                 $user = get_user_by( 'email', $email );
@@ -209,7 +210,8 @@ function upv_ticket_admin()
                         'user_pass'     => wp_generate_password(),
                         'user_login'    => $email,
                         'user_email'    => $email,
-                        'role'          => 'attendee'
+                        'role'          => 'attendee',
+                        'display_name'  => $userName
                     ];
                     wp_insert_user($user_data);
                     $user = get_user_by( 'email', $email );
@@ -221,6 +223,12 @@ function upv_ticket_admin()
                 $order->set_created_via( $email ); 
                 $order->set_customer_id( $user->ID ); 
                 $order->set_billing_phone($phone );
+
+                $name     = explode( ' ', $userName ); 
+                $order->set_billing_first_name( $name[0] );
+                array_shift($name); 
+                if( !empty( $name ) ) $order->set_billing_last_name( join(' ', $name) );
+                
 
                 $admin_order_note   = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES );
                 $order->add_order_note( '[ta]' . $admin_order_note );
@@ -263,10 +271,16 @@ function upv_ticket_admin()
                 $order->calculate_totals(); 
                 $orderId = $order->save(); 
 
+                if( $_POST['payment'] != 1 )
+                {
+                    $order_note['boxoffice']    = TRUE;
+                }
+
                 set_order_note( $orderId, $order_note );
 
                 $payment_status = $_POST['payment'] ? 'completed' : 'pending'; 
-                $order->update_status( $payment_status );
+                // $order->update_status( $payment_status );
+                $order->update_status( 'completed' );
 
                 // Add order to Performance
                 $tickets_sold = get_post_meta( $performance->ID, 'tickets_sold', TRUE ); 

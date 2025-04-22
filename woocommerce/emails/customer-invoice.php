@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $order_id		= $order->get_id();
-$order_notes 	= get_order_note( $order_id ); //unserialize(base64_decode(get_post_meta( $order_id, 'custom_field_name', TRUE )));
+$order_notes 	= get_order_note( $order_id ); 
 $order_details_str	= render_order_details($order_notes);
 $customer_note 	= $order->get_customer_note();
 
@@ -56,9 +56,11 @@ do_action( 'woocommerce_email_header', 'Your United Players order...', $email );
 	</tbody>
 </table>
 
-<p class="customer-note" style="border: 1px solid black; margin-top: 1rem; padding: 0.75rem;">
-	<?php echo $customer_note; ?>
-</p>
+<?php if( !empty($customer_note ) ): ?>
+	<p class="customer-note" style="border: 1px solid black; margin-top: 1rem; padding: 0.75rem;">
+		<?php echo $customer_note; ?>
+	</p>
+<?php endif; ?>
 
 <?php
 /**
@@ -96,20 +98,7 @@ if ( $additional_content ) {
 }
 ?>
 
-
-
-<?php if ( $order->needs_payment() ) { ?>
-	<p>
-	<?php
-	printf(
-        esc_html__('Your ticket order will be held at the Box Office for you to pay on the night', 'woocommerce')
-    );
-    ?>
-	</p>
-
-<?php }
-
-
+<?php
 /**
  * Executes the email footer.
  *

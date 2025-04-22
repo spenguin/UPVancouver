@@ -181,6 +181,7 @@ function render_order_details($notes)
             $amendedStr = $key ? 'This is an amended order. You have not been charged again.<br />' : '';
             continue;
         }
+        if( $key == 'boxoffice' ) continue;
         if( $args['quantity'] == 0 ) continue;
         $showCharge = $args['quantity'] * $args['misha_custom_price'];
         $orderTotal += $showCharge;
@@ -250,11 +251,18 @@ function render_order_details($notes)
         $order_str[] = "your generous donation";
         $second_str[]= "a tax receipt will be mailed to you in the next few days.";
     } 
+    
+
     $last           = array_pop($order_str)  . '.<br><br>';
     $second_str     = array_unique($second_str);
     $second_last    = array_pop( $second_str );
     $order_str      = $amendedStr . $opening . ( empty($order_str) ? "" : join( ', ', $order_str ) . " and " ) . $last;
     $order_str      .= "Your order is being processed: " .  ( empty($second_str) ? "" : join( ', ', $second_str ) . " and " ) . $second_last;
+
+    if ( array_key_exists('boxoffice', $notes ) )
+    {
+        $order_str .= "<br>Your ticket order will be held at the Box Office for you to pay on the night";
+    }
 
     // $order_str      .= $last;
     $o['order_str'] = $order_str;
