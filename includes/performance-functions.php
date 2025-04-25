@@ -64,3 +64,15 @@ function get_show_title_by_performance_date( $date )
     $show       = get_post( $showId );
     return $show->post_title;
 }
+
+function get_tickets_sold($performanceId)
+{
+    $tickets_sold   = get_post_meta($performanceId,'tickets_sold', TRUE); 
+    if( empty($tickets_sold) )
+    {
+        $tickets_sold	= [
+            'count'		=> 0
+        ];
+    }  
+    return $tickets_sold;
+}

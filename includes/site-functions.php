@@ -14,7 +14,7 @@ add_action('init', 'register_my_session');
 
 
 function get_post_by_title($title = NULL, $element="content", $post_type="post")
-{ die('test');
+{ 
     global $wpdb;
 
     if (is_null($title)) return "";

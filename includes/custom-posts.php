@@ -324,7 +324,7 @@ function tickets_sold()
     $tickets_sold       = get_post_meta($post->ID, 'tickets_sold', TRUE ); 
 
 ?>
-    <p><?php  echo $tickets_sold['count']; ?></p>
+    <p><?php  echo isset( $tickets_sold['count'] ) ? $tickets_sold['count'] : 0; ?></p>
 <?php
 }
 

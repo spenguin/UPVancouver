@@ -186,7 +186,8 @@ function upv_ticket_admin()
                 $message    = "Comp tickets require explanatory note.";
             }
             // Need to confirm that the date is an actual performance date
-            $performance    = get_post_by_title( date('j M Y', strtotime($_POST['performance_date']) ), '', 'performance' );
+            $performance_date   = date('j M Y', strtotime($_POST['performance_date']) );
+            $performance    = get_post_by_title( $performance_date, '', 'performance' );
             $time           = get_post_meta($performance->ID, 'performance_time', TRUE );
             if( is_null($performance) )
             {
@@ -233,7 +234,7 @@ function upv_ticket_admin()
                 $admin_order_note   = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES );
                 $order->add_order_note( '[ta]' . $admin_order_note );
 
-                $admin_customer_note = htmlspecialchars( $_POST['admin_customer_note'], ENT_QUOTES ); // Sanitise?
+                $admin_customer_note = htmlspecialchars( $_POST['admin_customer_note'], ENT_QUOTES ); 
                 if( !empty($admin_customer_note) )
                 {
                     update_user_meta($user->ID, 'user-notes-note', $admin_customer_note);
@@ -259,7 +260,7 @@ function upv_ticket_admin()
                         $order_note[]   = [
                             'product_id'    => $ticketId,
                             'quantity'      => $_POST[$ticketName],
-                            'date'          => date('j M Y', strtotime($_POST['performance_date'])),
+                            'date'          => $performance_date, //date('j M Y', strtotime($_POST['performance_date'])),
                             'time'          => $time,
                             'showTitle'     => $_POST['show_title'],
                             'misha_custom_price' => $product->get_price(),

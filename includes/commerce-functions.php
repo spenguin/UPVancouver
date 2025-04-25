@@ -169,7 +169,7 @@ function add_invoice_notes()
  * and the details of the order
  */
 function render_order_details($notes)
-{ 
+{
     $products_ordered   = [];
     $orderTotal         = 0;
     $amendedStr         = '';

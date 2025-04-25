@@ -6,7 +6,7 @@
 function upv_performance_report()
 {
     $performance_id = get_query_var( 'performance_id' );
-    $tickets_sold   = get_post_meta($performance_id,'tickets_sold', TRUE); 
+    $tickets_sold   = get_post_meta($performance_id,'tickets_sold', TRUE);
     $ticket_types   = getSingleShowTickets(); 
     $statuses       = [
         'processing'    => 'Pay at Box Office',
