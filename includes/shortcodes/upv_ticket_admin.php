@@ -11,9 +11,9 @@ function upv_ticket_admin()
         $order_id = filter_var($_GET['orderId'], FILTER_SANITIZE_NUMBER_INT);
         
         // Get the order details from the orderId
-        $order = wc_get_order( $order_id );
+        $order = wc_get_order( $order_id ); 
 
-        $order_note     = get_order_note( $order_id ); pvd($order_note);
+        $order_note     = get_order_note( $order_id ); 
         $customer_note  = $order->get_customer_note();
 
         $customer       = get_order_customer( $order ); 
@@ -44,20 +44,23 @@ function upv_ticket_admin()
                 $changed    = FALSE;
                 foreach($_POST['date'] as $key => $date )
                 {
-                    if( $notes[$key]['date'] != ($new_date = date('j M Y',$date ) ) )
+                    if( $order_note[$key]['date'] != ($new_date = date('j M Y',$date ) ) )
                     {
                         $changed    = TRUE;
+                        amend_tickets_sold( $order_note[$key]['date'], -1 * $order_note[$key]['quantity'], $order_id );
+                        amend_tickets_sold( $new_date, $order_note[$key]['quantity'], $order_id );
                         $performance= get_post_by_title( $new_date, NULL, 'performance' );
                         $time       = get_post_meta($performance->ID, 'performance_time', TRUE );
-                        $notes[$key]['date'] = $new_date;
-                        $notes[$key]['time'] = $time;
+                        $order_note[$key]['date'] = $new_date;
+                        $order_note[$key]['time'] = $time;
                     }
                 }
                 if( $changed )
                 {
-                    $notes['amended']   = "changed";
-                    $notes_encoded      = base64_encode(serialize($notes));
-                    update_post_meta($order_id, 'custom_field_name', $notes_encoded );
+                    $order_note['amended']   = "changed";
+                    set_order_note( $order_id, $order_note);
+                    // $notes_encoded      = base64_encode(serialize($notes));
+                    // update_post_meta($order_id, 'custom_field_name', $notes_encoded );
                 } 
 
             }
@@ -70,7 +73,7 @@ function upv_ticket_admin()
                     <div class="error"><?php echo $message; ?>
                 <?php endif; ?>
                 <?php 
-                    if( !isset($custom['custom_field_name']) )
+                    if( empty($order_note) )
                     {
                         echo '<p>Order not found</p>';
                     } else {
@@ -89,8 +92,8 @@ function upv_ticket_admin()
                                 </thead>
                                 <tbody>
                                     <?php 
-                                    foreach( $notes as $key => $note )
-                                    { 
+                                    foreach( $order_note as $key => $note )
+                                    {
                                         if( $key == "amended" ) continue;
                                         $terms  = get_the_terms($note['product_id'], 'product_cat'); 
                                         $term   = reset($terms); 

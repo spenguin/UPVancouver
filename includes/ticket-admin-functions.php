@@ -10,11 +10,7 @@ function get_order_note($order_id)
     if(empty($tmp)) return '';
     $tmp    = unserialize(base64_decode($tmp)); 
 
-    return $tmp; //unserialize(base64_decode($tmp));
-    
-    // $custom = get_post_custom($order_id); 
-
-    // $notes  = unserialize(base64_decode($custom['custom_field_name'][0])); var_dump($notes);
+    return $tmp;
 }
 
 function set_order_note( $order_id, $note )
@@ -42,4 +38,21 @@ function set_admin_order_note($order_id)
         $admin_order_note = trim(substr($admin_order_notes[0]->content, 4 )); 
     }
     return $admin_order_note;
+}
+
+function amend_tickets_sold( $date, $quantity, $order_id )
+{
+    $performance    = get_post_by_title( $date, NULL, 'performance' );
+    $tickets_sold   = get_post_meta( $performance->ID, 'tickets_sold', TRUE ); 
+    if( empty($tickets_sold) )
+    {
+        $tickets_sold           = [];
+        $tickets_sold['count']  = 0;
+    } 
+    $tickets_sold['count'] += $quantity;
+    if( !array_key_exists( $order_id, $tickets_sold ))
+    {
+        $tickets_sold[$order_id][]    = $quantity;
+    } 
+    update_post_meta( $performance->ID, 'tickets_sold', $tickets_sold );
 }
