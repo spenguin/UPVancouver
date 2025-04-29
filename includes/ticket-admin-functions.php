@@ -16,7 +16,7 @@ function get_order_note($order_id)
 function set_order_note( $order_id, $note )
 {
     $tmp    = base64_encode(serialize($note)); 
-    add_post_meta( $order_id, 'custom_field_name', $tmp );
+    update_post_meta( $order_id, 'custom_field_name', $tmp );
 }
 
 

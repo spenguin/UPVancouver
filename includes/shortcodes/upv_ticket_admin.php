@@ -59,6 +59,9 @@ function upv_ticket_admin()
                 {
                     $order_note['amended']   = "changed";
                     set_order_note( $order_id, $order_note);
+                    $order->update_status( 'processing' );
+                    $order->update_status( 'completed' );
+
                     // $notes_encoded      = base64_encode(serialize($notes));
                     // update_post_meta($order_id, 'custom_field_name', $notes_encoded );
                 } 
