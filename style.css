@@ -1112,4 +1112,15 @@ input[type=text] {
   width: 100%;
 }
 
+/** Order Table styles */
+.order-table thead td {
+  transform: rotate(-45deg);
+}
+.order-table thead td:first-child {
+  transform: none;
+}
+.order-table td {
+  border: 1px solid black;
+}
+
 /*# sourceMappingURL=style.css.map */

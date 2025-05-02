@@ -283,6 +283,14 @@ function upv_ticket_admin()
                     $order_note['boxoffice']    = TRUE;
                 }
 
+                // If the email being used is the Admin email, we need to save the Name and Phone Number in the $order_note
+                if( $email == get_bloginfo('admin_email'))    // This will need to be amended.
+                {
+                    $order_note['customer_contact'] = [
+                        'name'      => $userName,
+                        'phone'     => $phone
+                    ];
+                }
                 set_order_note( $orderId, $order_note );
 
                 $payment_status = $_POST['payment'] ? 'completed' : 'pending'; 
@@ -305,7 +313,7 @@ function upv_ticket_admin()
             }
         }
         $userName   = isset($_POST['userName'] ) ? $_POST['userName'] : '';
-        $userEmail  = isset($_POST['userEmail'] ) ? $_POST['userEmail'] : 'info@weirdspace.com';
+        $userEmail  = isset($_POST['userEmail'] ) ? $_POST['userEmail'] : get_bloginfo('admin_email'); //'info@weirdspace.com';
         $userPhone  = isset($_POST['userPhone'] ) ? $_POST['userPhone'] : '';
 
         ?>

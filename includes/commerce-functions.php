@@ -182,6 +182,7 @@ function render_order_details($notes)
             continue;
         }
         if( $key == 'boxoffice' ) continue;
+        if( $key == "customer_contact" ) continue;
         if( $args['quantity'] == 0 ) continue;
         $showCharge = $args['quantity'] * $args['misha_custom_price'];
         $orderTotal += $showCharge;

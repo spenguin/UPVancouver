@@ -6,6 +6,15 @@
 function upv_performance_report()
 {
     $performance_id = get_query_var( 'performance_id' );
+    $performance    = get_post( $performance_id );
+    $show_id        = get_post_meta( $performance_id, 'show_id', TRUE );
+    $show           = get_post( $show_id );
+    echo '<h3>Tickets sold for ' . $performance->post_title . ' performance of ' . $show->post_title . '</h3>';
+    if( isset($_REQUEST['download']) )
+    {
+        array_csv_download( $performance_id );
+    }
+    
     $tickets_sold   = get_post_meta($performance_id,'tickets_sold', TRUE);
     $ticket_types   = getSingleShowTickets(); 
     $statuses       = [
@@ -18,6 +27,7 @@ function upv_performance_report()
         return '<p>No tickets sold.</p>';
     }
     ?>
+    <p><a href="/performance-report/?performance_id=<?php echo $performance_id; ?>&download=true">Download CSV</a><p>
     <table class="upv-table order-table">
         <thead>
             <tr>
@@ -29,7 +39,9 @@ function upv_performance_report()
                 <td>Senior</td>
                 <td>Adult</td>
                 <td>Comp</td>
-                <td>Note</td>
+                <td>Order Note</td>
+                <td>Order Note (Admin)</td>
+                <td>Customer Note (Admin)</td>
             </tr>
         </thead>
         <tbody>
