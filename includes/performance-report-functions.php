@@ -3,13 +3,24 @@
  * Performance Report functions
  */
 
-function array_csv_download( $performance_id, $filename = "export.csv", $delimiter=";" )
+function array_csv_download( $performance, $filename = "export.csv" )
 { 
-    $tickets_sold   = get_post_meta($performance_id,'tickets_sold', TRUE); 
-    $tickets        = getSingleShowTickets(); die(pvd($tickets));
+    $tickets_sold   = get_post_meta($performance->ID,'tickets_sold', TRUE);
+    $tickets        = getSingleShowTickets(); //die(pvd($tickets));
     $column_headings= [
-        'Name',
-        'Paid status',
+        // 'name'      => 'Name',
+        // 'status'    => 'Paid Status',
+        // 'season'    => 'Season',
+        // 'preview'   => 'Preview',
+        // 'student'   => 'Student',
+        // 'senior'    => 'Senior',
+        // 'adult'     => 'Adult',
+        // 'comp'      => 'Comp',
+        // 'order_note'=> 'Order Note',
+        // 'order_note_admin'      => 'Order Note (Admin)',
+        // 'customer_note_admin'   => 'Customer Note (Admin)'
+       'Name',
+        'Paid Status',
         'Season',
         'Preview',
         'Student',
@@ -18,7 +29,7 @@ function array_csv_download( $performance_id, $filename = "export.csv", $delimit
         'Comp',
         'Order Note',
         'Order Note (Admin)',
-        'Customer Note (Admin)'
+        'Customer Note (Admin)'        
     ];
 
     
@@ -33,11 +44,33 @@ function array_csv_download( $performance_id, $filename = "export.csv", $delimit
     // use keys as column titles
     fputcsv( $handle, $column_headings );
 
-    foreach ( $tickets_sold as $key => $order ) {
-        if( $key == "count" ) continue;
-        $order_notes    = get_order_note($key); 
+    foreach ( $tickets_sold as $order_id => $stuff ) {
+        if( $order_id == "count" ) continue;
+        $value  = array_fill(0, 11, 0 );
 
+        $order_notes    = get_order_note($order_id);
 
+        // Get the customer details first
+        $order  = wc_get_order( $order_id ); 
+        $email  = $order->get_billing_email(); 
+        
+        if( $email == get_option('admin_email') ) // Using default email
+        {
+            $value[0]  = $tickets_sold['customer_details']['name'];
+        } else {
+            $value[0]  = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+        }
+
+        $value[1]    = array_key_exists( 'boxoffice', $order_notes ) ? 'boxoffice' : 'complete';
+        
+        foreach( $order_notes as $key => $ticket_order )
+        {
+            if( $key == "amended" ) continue; // Are there other keys I need to check for?
+
+            if( $ticket_order['date'] != $performance->post_title ) continue; // Not for this performance
+            $value[array_search($ticket_order['name'], $column_headings)]   = $ticket_order['quantity'];
+
+        }
         fputcsv( $handle, $value );
     }
 

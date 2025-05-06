@@ -13,7 +13,7 @@ function upv_ticket_admin()
         // Get the order details from the orderId
         $order = wc_get_order( $order_id ); 
 
-        $order_note     = get_order_note( $order_id ); 
+        $order_note     = get_order_note( $order_id ); pvd($order_note);
         $customer_note  = $order->get_customer_note();
 
         $customer       = get_order_customer( $order ); 
