@@ -28,7 +28,7 @@ function upv_performance_report()
     }
     ?>
     <p><a href="/performance-report/?performance_id=<?php echo $performance_id; ?>&download=true">Download CSV</a><p>
-    <table class="upv-table order-table">
+    <!-- <table class="upv-table order-table">
         <thead>
             <tr>
                 <td>Name</td>
@@ -76,6 +76,6 @@ function upv_performance_report()
                 }
             ?>
         </tbody>
-    </table>
+    </table> -->
     <?php
 }

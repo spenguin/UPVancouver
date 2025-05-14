@@ -229,7 +229,7 @@ function upv_ticket_admin()
                 $order          = new WC_Order( $email );
                 $order->set_created_via( $email ); 
                 $order->set_customer_id( $user->ID ); 
-                $order->set_billing_phone($phone );
+                $order->set_billing_phone( $phone );
 
                 $name     = explode( ' ', $userName ); 
                 $order->set_billing_first_name( $name[0] );

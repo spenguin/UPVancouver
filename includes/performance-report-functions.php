@@ -19,17 +19,16 @@ function array_csv_download( $performance, $filename = "export.csv" )
         // 'order_note'=> 'Order Note',
         // 'order_note_admin'      => 'Order Note (Admin)',
         // 'customer_note_admin'   => 'Customer Note (Admin)'
-       'Name',
+        'Name',
+        'Phone',
         'Paid Status',
-        'Season',
+        'Seasons',
         'Preview',
         'Student',
         'Senior',
         'Adult',
         'Comp',
-        'Order Note',
-        'Order Note (Admin)',
-        'Customer Note (Admin)'        
+        'Seating',
     ];
 
     
@@ -46,26 +45,29 @@ function array_csv_download( $performance, $filename = "export.csv" )
 
     foreach ( $tickets_sold as $order_id => $stuff ) {
         if( $order_id == "count" ) continue;
-        $value  = array_fill(0, 11, 0 );
+        $value  = array_fill(0, 10, 0 );
 
-        $order_notes    = get_order_note($order_id);
+        $order_notes    = get_order_note($order_id); pvd($order_notes);
 
         // Get the customer details first
         $order  = wc_get_order( $order_id ); 
         $email  = $order->get_billing_email(); 
         
         if( $email == get_option('admin_email') ) // Using default email
-        {
-            $value[0]  = $tickets_sold['customer_details']['name'];
-        } else {
-            $value[0]  = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+        {   
+            $value[0]   = $order_notes['customer_contact']['name']; 
+            $value[1]   = $order_notes['customer_contact']['phone'];
+            } else {
+            $value[0]   = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+            $value[1]   = $order->get_billing_phone();
         }
 
-        $value[1]    = array_key_exists( 'boxoffice', $order_notes ) ? 'boxoffice' : 'complete';
+        $value[2]    = array_key_exists( 'boxoffice', $order_notes ) ? 'boxoffice' : 'complete';
         
         foreach( $order_notes as $key => $ticket_order )
         {
             if( $key == "amended" ) continue; // Are there other keys I need to check for?
+            if( $key == "customer_contact" ) continue;
 
             if( $ticket_order['date'] != $performance->post_title ) continue; // Not for this performance
             $value[array_search($ticket_order['name'], $column_headings)]   = $ticket_order['quantity'];

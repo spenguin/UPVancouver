@@ -1084,6 +1084,35 @@ input[type=text] {
   }
 }
 
+/** Member Display styles */
+@media screen and (min-width: 768px) {
+  .member-display h3 {
+    text-align: left;
+  }
+  .member-display h3 span {
+    text-transform: capitalize;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .member-display__wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .member-display--image {
+    width: 30%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .member-display--text {
+    width: 68%;
+  }
+}
+
 /** History page specific styles */
 .vc_btn3 {
   color: #FFFFFF;
