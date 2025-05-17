@@ -55,10 +55,13 @@ function array_csv_download( $performance, $filename = "export.csv" )
         
         if( $email == get_option('admin_email') ) // Using default email
         {   
-            $value[0]   = $order_notes['customer_contact']['name']; 
+            $name       = explode(' ', $order_notes['customer_contact']['name'] );
+            $firstName  = $name[0];
+            array_shift($name);
+            $value[0]   = join( ' ', $name ) . ', ' . $firstName; 
             $value[1]   = $order_notes['customer_contact']['phone'];
             } else {
-            $value[0]   = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+            $value[0]   = $order->get_billing_first_name() . ', ' . $order->get_billing_last_name();
             $value[1]   = $order->get_billing_phone();
         }
 
