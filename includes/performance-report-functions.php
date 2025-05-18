@@ -47,11 +47,12 @@ function array_csv_download( $performance, $filename = "export.csv" )
         if( $order_id == "count" ) continue;
         $value  = array_fill(0, 10, 0 );
 
-        $order_notes    = get_order_note($order_id); pvd($order_notes);
+        $order_notes    = get_order_note($order_id); //pvd($order_notes);
 
         // Get the customer details first
         $order  = wc_get_order( $order_id ); 
         $email  = $order->get_billing_email(); 
+        
         
         if( $email == get_option('admin_email') ) // Using default email
         {   
@@ -61,11 +62,12 @@ function array_csv_download( $performance, $filename = "export.csv" )
             $value[0]   = join( ' ', $name ) . ', ' . $firstName; 
             $value[1]   = $order_notes['customer_contact']['phone'];
             } else {
-            $value[0]   = $order->get_billing_first_name() . ', ' . $order->get_billing_last_name();
+            $value[0]   = $order->get_billing_last_name() . ', ' . $order->get_billing_first_name();
             $value[1]   = $order->get_billing_phone();
         }
 
         $value[2]    = array_key_exists( 'boxoffice', $order_notes ) ? 'boxoffice' : 'complete';
+        $value[9]    = get_admin_order_note( $order_id );
         
         foreach( $order_notes as $key => $ticket_order )
         {

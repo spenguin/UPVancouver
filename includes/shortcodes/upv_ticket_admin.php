@@ -13,7 +13,7 @@ function upv_ticket_admin()
         // Get the order details from the orderId
         $order = wc_get_order( $order_id ); 
 
-        $order_note     = get_order_note( $order_id ); pvd($order_note);
+        $order_note     = get_order_note( $order_id ); //pvd($order_note);
         $customer_note  = $order->get_customer_note();
 
         $customer       = get_order_customer( $order ); 
@@ -21,7 +21,7 @@ function upv_ticket_admin()
         $current_admin_user_note    = get_user_meta($customer->ID, 'user-notes-note', true);
 
         $admin_customer_note    = '';
-        $admin_order_note       = set_admin_order_note($order_id); 
+        $admin_order_note       = get_admin_order_note($order_id); 
 
         // Has there been any amendments?
         if( isset($_POST['amend']) )
@@ -142,7 +142,7 @@ function upv_ticket_admin()
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <label for="admin_order_note">Order Note (Admin):</label><br>
+                                            <label for="admin_order_note">Order Note (Admin) [Also Seating Assignment]:</label><br>
                                             <textarea name="admin_order_note" style="width:100%;"><?php echo $admin_order_note; ?></textarea>
                                         </td>
                                     </tr>
@@ -356,7 +356,7 @@ function upv_ticket_admin()
                         <div class="upv-form__short-text"><input type="radio" name="payment"  value="0" <?php echo $payment == 0 ? "checked" : ''; ?>> Pay at Box Office</div>
                         <!-- <div class="upv-form__short-text"><input type="radio" name="payment" class="short-text"> Comp</div> -->
                     </label>  
-                    <label for="admin_order_note">Order Note (Admin): (required for Comp tickets)
+                    <label for="admin_order_note">Order Note (Admin): (required for Comp tickets) [Also Seating Assignment]
                         <textarea name="admin_order_note" ><?php echo isset($_POST['admin_order_note']) ? $_POST['admin_order_note'] : ''; ?></textarea>
                     </label>
                     <label for="admin_customer_note">Customer Note (Admin):

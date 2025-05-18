@@ -49,7 +49,7 @@ function upv_performance_report()
                 foreach( $tickets_sold as $order_id => $tickets )
                 {
                     $order          = new WC_Order( $order_id ); 
-                    $name           = $order->get_billing_first_name() . ' ' . $order->get_billing_last_name(); 
+                    $name           = $order->get_billing_last_name() . ', ' . $order->get_billing_first_name(); 
                     $status         = $order->get_status();
                     $note           = $order->get_customer_note();
                     ?>

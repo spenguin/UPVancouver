@@ -27,7 +27,7 @@ function get_order_customer( $order )
 }
 
 
-function set_admin_order_note($order_id)
+function get_admin_order_note($order_id)
 {
     $admin_order_note   = '';
     $admin_order_notes  = wc_get_order_notes([
