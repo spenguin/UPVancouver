@@ -237,7 +237,7 @@ function upv_ticket_admin()
                 if( !empty( $name ) ) $order->set_billing_last_name( join(' ', $name) );
                 
 
-                $admin_order_note   = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES );
+                $admin_order_note   = htmlspecialchars( $_POST['admin_order_note'], ENT_QUOTES );//die(pvd($admin_order_note));
                 $order->add_order_note( '[ta]' . $admin_order_note );
 
                 $admin_customer_note = htmlspecialchars( $_POST['admin_customer_note'], ENT_QUOTES ); 
@@ -296,6 +296,7 @@ function upv_ticket_admin()
                 $payment_status = $_POST['payment'] ? 'completed' : 'pending'; 
                 // $order->update_status( $payment_status );
                 $order->update_status( 'completed' );
+                $order->add_order_note( '[ta]' . $admin_order_note );
 
                 // Add order to Performance
                 $tickets_sold = get_post_meta( $performance->ID, 'tickets_sold', TRUE ); 
