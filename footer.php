@@ -16,8 +16,8 @@
                 </div>
                 <div class="footer__social-media">
                     <div class="a2a_kit a2a_kit_size_46 a2a_default_style a2a_follow">
-                        <a class="a2a_button_facebook" href="https://www.facebook.com/AddToAny"></a>
-                        <a class="a2a_button_instagram" href="https://www.instagram.com/kevin"></a>
+                        <a class="a2a_button_facebook" href="https://www.facebook.com/groups/United.Players.Vancouver"></a>
+                        <a class="a2a_button_instagram" href="https://www.instagram.com/united_players_of_vancouver/"></a>
                         <!-- <a class="a2a_button_mastodon" href="https://mastodon.social/@Gargron"></a>
                         <a class="a2a_button_threads" href="https://www.threads.net/@addtoany"></a>
                         <a class="a2a_button_tiktok"  href="https://www.tiktok.com/@khaby.lame"></a>
@@ -25,12 +25,12 @@
                         <a class="a2a_button_pinterest" href="https://www.pinterest.com/pinterest"></a>
                         <a class="a2a_button_linkedin" href="https://www.linkedin.com/in/reidhoffman"></a> -->
                         <!-- <a class="a2a_button_vimeo" href="https://vimeo.com/staff"></a> -->
-                        <a class="a2a_button_youtube" href="https://www.youtube.com/user/YouTube"></a>
+                        <!-- <a class="a2a_button_youtube" href="https://www.youtube.com/user/YouTube"></a> -->
                         <!-- <a class="a2a_button_tumblr" href="https://staff.tumblr.com/"></a>
                         <a class="a2a_button_github" href="https://github.com/torvalds"></a>
                         <a class="a2a_button_snapchat" href="https://www.snapchat.com/add/teamsnapchat"></a>
                         <a class="a2a_button_medium" href="https://medium.com/@ev"></a> -->
-                        <a class="a2a_button_x" href="https://twitter.com/ev"></a>
+                        <!-- <a class="a2a_button_x" href="https://twitter.com/ev"></a> -->
                         <!-- <a class="a2a_button_bluesky" href="https://bsky.app/profile/jay.bsky.team"></a>
                         <a class="a2a_button_flickr" href="https://www.flickr.com/photos/flickr"></a>
                         <a class="a2a_button_google_maps" href="https://goo.gl/maps/xweTPfsMoFTXHrCF7"></a>

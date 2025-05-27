@@ -117,10 +117,15 @@ img {
 }
 
 .feature-image {
-  border-radius: 0 0 5rem;
+  border-radius: 0 0 2rem;
   overflow: hidden;
   display: block;
   line-height: 0;
+}
+@media screen and (min-width: 768px) {
+  .feature-image {
+    border-radius: 0 0 5rem;
+  }
 }
 
 /** Heading styles */
@@ -141,6 +146,7 @@ h1 {
 
 h2 {
   font-size: 1.75rem;
+  line-height: 2rem;
   color: #4F646E;
   text-transform: uppercase;
   margin-top: 1rem;
@@ -148,11 +154,12 @@ h2 {
 @media screen and (min-width: 768px) {
   h2 {
     font-size: 2rem;
+    line-height: 2.25rem;
   }
 }
 
 h3 {
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
   text-align: center;
 }
@@ -630,6 +637,11 @@ input[type=text] {
   align-items: center;
   flex-wrap: wrap;
 }
+.season h3 {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0;
+}
 .season > p {
   width: 100%;
 }
@@ -642,11 +654,13 @@ input[type=text] {
 }
 .season__show {
   max-width: 543px;
+  margin-bottom: 1rem;
 }
 @media screen and (min-width: 1280px) {
   .season__show {
     width: 48%;
     max-width: none;
+    margin-bottom: 2rem;
   }
 }
 @media screen and (min-width: 768px) {
@@ -656,22 +670,29 @@ input[type=text] {
     justify-content: space-between;
   }
 }
+.season__show--text {
+  margin-bottom: 0.5rem;
+}
 .season__show--text h2 {
   margin-bottom: 0.5rem;
 }
 @media screen and (min-width: 768px) {
   .season__show--text {
     width: 55%;
+    margin-bottom: 0;
   }
 }
 .season__show--credits-major {
   font-size: 1.25rem;
+  line-height: 1.5rem;
   color: #000000;
   font-weight: 600;
   margin: 0;
+  margin-bottom: 0.35rem;
 }
 .season__show--credits-minor {
   font-size: 1rem;
+  line-height: 1.25rem;
   color: #000000;
   font-weight: 600;
   margin: 0;
@@ -705,7 +726,7 @@ input[type=text] {
   }
 }
 .statement h1 {
-  font-size: 1rem;
+  font-size: 1.875rem;
   font-weight: 600;
   display: inline;
   color: #000000;
@@ -758,13 +779,25 @@ input[type=text] {
 }
 
 /** Style for single show page */
+@media screen and (min-width: 1280px) {
+  .credits {
+    width: 543px;
+  }
+}
 .credits__directing {
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 600;
+  line-height: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 .credits__writing {
   font-size: 1.25rem;
-  font-weight: bold;
+  line-height: 1.5rem;
+  color: #000000;
+  font-weight: 600;
+  margin: 0;
+  margin-bottom: 0px;
+  margin-bottom: 0.35rem;
 }
 
 .show-page {
@@ -778,6 +811,7 @@ input[type=text] {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 3rem;
   }
 }
 @media screen and (min-width: 1280px) {
@@ -806,6 +840,7 @@ input[type=text] {
     padding: 1rem 26% 3rem 26%;
     margin-left: -26%;
     margin-right: -26%;
+    justify-content: space-between;
   }
 }
 @media screen and (min-width: 1280px) {
@@ -815,12 +850,13 @@ input[type=text] {
     margin-right: 0;
     padding: 1rem 2% 3rem 2%;
     border-radius: 0 0 5rem;
-    width: 443px;
+    width: 543px;
+    margin-top: -140px;
   }
 }
 @media screen and (min-width: 768px) {
   .show-page__sidebar--cast, .show-page__sidebar--production {
-    width: 48%;
+    width: 46%;
   }
 }
 @media screen and (min-width: 1280px) {
@@ -1009,6 +1045,9 @@ input[type=text] {
 }
 
 /** Audition Details styles */
+.audition-details h3 {
+  text-align: left;
+}
 @media screen and (min-width: 1280px) {
   .audition-details__main {
     display: flex;
@@ -1052,9 +1091,10 @@ input[type=text] {
   text-transform: uppercase;
   font-size: 1rem;
   padding: 0.5rem 1rem;
-  min-width: 144px;
-  display: inline-block;
   text-align: center;
+  display: block;
+  width: auto;
+  margin-top: 1rem;
 }
 @media screen and (min-width: 1280px) {
   .audition-roles a {
@@ -1085,13 +1125,11 @@ input[type=text] {
 }
 
 /** Member Display styles */
-@media screen and (min-width: 768px) {
-  .member-display h3 {
-    text-align: left;
-  }
-  .member-display h3 span {
-    text-transform: capitalize;
-  }
+.member-display h3 {
+  text-align: left;
+}
+.member-display h3 span {
+  text-transform: capitalize;
 }
 
 @media screen and (min-width: 768px) {
@@ -1101,6 +1139,9 @@ input[type=text] {
   }
 }
 
+.member-display--image img {
+  width: 100%;
+}
 @media screen and (min-width: 768px) {
   .member-display--image {
     width: 30%;
