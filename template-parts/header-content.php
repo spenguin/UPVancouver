@@ -38,5 +38,6 @@ $override           = get_option('override');
         <?php } ?>
         <div class="feature-image">
             <?php echo get_the_post_thumbnail(); ?>
+            <img class="upv-icon" src="wp-content\themes\upvancouver\assets\UPV-logo.png" alt="United Players of Vancouver" />
         </div>
     </div>

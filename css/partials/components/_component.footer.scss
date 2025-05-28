@@ -33,9 +33,10 @@
         // padding: 1rem 5%;
         padding-top: 0.5rem;
         .a2a_kit {
-            display: flex;
-            justify-content: space-between;
+            // display: flex;
+            // justify-content: space-between;
             @include screen-greater-than(tablet) {
+                display: flex;
                 flex-direction: column;
                 align-items: end;
             }
@@ -59,6 +60,20 @@
         @include screen-greater-than(tablet){
            width: 25%;
             padding-left: 0;
+        }
+        .a2a_icon_wrapper {
+            display: flex;
+            justify-content: space-between;   
+            width: 40%;
+            margin: 0 auto;   
+            @include screen-greater-than(tablet) {
+                margin: 0;
+                flex-direction: column;
+            }      
+        }
+        .a2a_button_facebook, .a2a_button_instagram {
+            display: flex;
+            justify-content: center;
         }
     }
     &__acknowledgement {
