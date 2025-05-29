@@ -40,7 +40,7 @@ $override           = get_option('override');
             <?php echo get_the_post_thumbnail(); ?>
             <?php 
                 if( !is_home() && !is_front_page() && $post->post_type != "show" ): ?>
-                    <img class="upv-icon" src="<?php echo CORE_TEMPLATE_URL; ?>/assets/UPV-logo.png" alt="United Players of Vancouver" />
+                    <img class="upv-icon" src="<?php echo CORE_TEMPLATE_URL; ?>/assets/UPV_White_Icon_dim_background_60.png" alt="United Players of Vancouver" />
                 <?php endif; ?>
         </div>
     </div>
