@@ -33,11 +33,14 @@ $override           = get_option('override');
     <div class="hero upvimage">
         <?php if( is_home() || is_front_page() ) { ?>
             <div class="anniversary-flash">
-                <img src="wp-content\themes\upvancouver\assets\upv-65th-logo.svg" alt="UPV 65th Anniversary" />
+                <img src="wp-content\themes\upvancouver\assets\UPV_White_Horz.svg" alt="United Players of Vancouver" />
             </div>
         <?php } ?>
         <div class="feature-image">
             <?php echo get_the_post_thumbnail(); ?>
-            <img class="upv-icon" src="wp-content\themes\upvancouver\assets\UPV-logo.png" alt="United Players of Vancouver" />
+            <?php 
+                if( !is_home() && !is_front_page() && $post->post_type != "show" ): ?>
+                    <img class="upv-icon" src="<?php echo CORE_TEMPLATE_URL; ?>/assets/UPV-logo.png" alt="United Players of Vancouver" />
+                <?php endif; ?>
         </div>
     </div>

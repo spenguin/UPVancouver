@@ -22,6 +22,7 @@
     {
         max-width: $componentMaxWidth;
         margin-bottom: 1rem;
+        width: 100%;
         @include screen-greater-than(desktop) {
             width: 48%;
             max-width: none;

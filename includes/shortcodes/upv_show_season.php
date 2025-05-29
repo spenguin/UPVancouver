@@ -91,7 +91,7 @@ function upv_show_season( $atts = [], $content = null, $tag = '' )
                         if( $showObj->post_count % 2 == 1 ): ?>
                         <div class="season__show">
                             <div class="season__show--image feature-image">
-                                <a href="<?php echo esc_url( get_permalink() ); ?>"><img src="<?php echo CORE_TEMPLATE_URL; ?>/assets/furniture/65th-anniversary-tile.jpg" /></a>
+                                <a href="<?php echo esc_url( get_permalink() ); ?>"><img src="<?php echo CORE_TEMPLATE_URL; ?>/assets/furniture/Home-page-placeholder_2.jpg" /></a>
                             </div>
                             <div class="cta--wrapper"><a class="button button--huge" href="/past-performances"><span>Past Performances</span>this season</a></div>
                         </div>

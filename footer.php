@@ -15,11 +15,9 @@
                     </div>  
                 </div>
                 <div class="footer__social-media">
-                    <div class="a2a_kit a2a_kit_size_46 a2a_default_style a2a_follow">
-                        <div class="a2a_icon_wrapper">
-                            <a class="a2a_button_facebook" href="https://www.facebook.com/groups/United.Players.Vancouver"></a>
-                            <a class="a2a_button_instagram" href="https://www.instagram.com/united_players_of_vancouver/"></a>
-                        </div>
+                    <div class="footer__social-media--wrapper">
+                        <a href="https://www.facebook.com/groups/United.Players.Vancouver" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/united_players_of_vancouver/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                 </div>                
             </div>
