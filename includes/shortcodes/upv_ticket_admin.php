@@ -112,8 +112,10 @@ function upv_ticket_admin()
                                             <td><?php echo $note['quantity']; ?></td>
                                             <td>
                                                 <?php 
-                                                    if( in_array($term->slug, ['season-ticket', 'donation', "uncategorized"] ) )
+                                                    if( in_array($term->slug, ['season-ticket', 'donation'] ) )
                                                     {
+                                                        echo "N/A";
+                                                    } elseif( $term->slug == "uncategorized" && $note['name'] <> "Comp" ) {
                                                         echo "N/A";
                                                     } else { 
                                                         if( strtotime($note['date']) < time() )
@@ -186,7 +188,7 @@ function upv_ticket_admin()
                 $message    = "Payment status must be selected";
             }
             // Test if Comp ticket is selected; Note required
-            if( isset($_POST['comp']) && $_POST['comp'] > 1 && !isset($_POST['notes']) )
+            if( isset($_POST['comp']) && $_POST['comp'] > 1 && !isset($_POST['admin_order_note']) )
             {
                 $error      = TRUE;
                 $message    = "Comp tickets require explanatory note.";
