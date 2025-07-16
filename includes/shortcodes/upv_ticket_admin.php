@@ -144,7 +144,7 @@ function upv_ticket_admin()
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <label for="admin_order_note">Order Note (Admin) [Also Seating Assignment]:</label><br>
+                                            <label for="admin_order_note">Accessibility notes (if applicable):</label><br>
                                             <textarea name="admin_order_note" style="width:100%;"><?php echo $admin_order_note; ?></textarea>
                                         </td>
                                     </tr>
@@ -359,7 +359,7 @@ function upv_ticket_admin()
                         <div class="upv-form__short-text"><input type="radio" name="payment"  value="0" <?php echo $payment == 0 ? "checked" : ''; ?>> Pay at Box Office</div>
                         <!-- <div class="upv-form__short-text"><input type="radio" name="payment" class="short-text"> Comp</div> -->
                     </label>  
-                    <label for="admin_order_note">Order Note (Admin): (required for Comp tickets) [Also Seating Assignment]
+                    <label for="admin_order_note">Accessibility notes (if applicable): (Also required for Comp tickets)
                         <textarea name="admin_order_note" ><?php echo isset($_POST['admin_order_note']) ? $_POST['admin_order_note'] : ''; ?></textarea>
                     </label>
                     <label for="admin_customer_note">Customer Note (Admin):
