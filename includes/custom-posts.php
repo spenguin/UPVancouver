@@ -20,7 +20,7 @@ function initialize()
     // add_action('save_post_show', '\CustomPosts\save_promote_show');
     // add_action('save_post_show', '\CustomPosts\save_show_cast');    
 
-    // add_action('save_post_performance', '\CustomPosts\save_performance_meta');
+    add_action('save_post_performance', '\CustomPosts\save_performance_time');
     add_action('save_post_performance', '\CustomPosts\save_preview');
     add_action('save_post_performance', '\CustomPosts\save_talkback');
     add_action('save_post_performance', '\CustomPosts\save_soldout');
