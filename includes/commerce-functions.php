@@ -19,6 +19,7 @@ add_action('woocommerce_checkout_update_order_meta', 'custom_checkout_field_upda
 add_action( 'init', 'misha_register_pay_at_box_office_status' );
 add_filter( 'wc_order_statuses', 'misha_add_status_to_list' );
 // add_action( 'woocommerce_email_order_meta', 'add_invoice_notes', 15 );
+add_filter( 'woocommerce_checkout_fields', 'md_custom_woocommerce_checkout_fields' );
 
 
 
@@ -269,4 +270,12 @@ function render_order_details($notes)
     $o['order_str'] = $order_str;
 
     return $o;
+}
+
+function md_custom_woocommerce_checkout_fields( $fields ) 
+{
+    // $fields['order']['order_comments']['placeholder'] = 'Special notes';
+    $fields['order']['order_comments']['label'] = 'Seating requests:';
+
+    return $fields;
 }

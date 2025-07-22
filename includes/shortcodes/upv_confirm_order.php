@@ -96,7 +96,7 @@ function upv_confirm_order()
                 <label>Name: <input type="text" name="userName" required/></label>
                 <label>Phone number: <input type="phone" name="phone" required/></label>
                 <label>Email: <input type="email" name="email" required/></label>
-                <label>Notes:</label>
+                <label>Seating requests:</label>
                 <textarea name="notes" ></textarea>
                 <input type="submit" class="button button--action" value="Confirm Order" name="confirm-order" />
             </form>

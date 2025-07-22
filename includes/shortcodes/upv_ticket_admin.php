@@ -96,8 +96,10 @@ function upv_ticket_admin()
                                 <tbody>
                                     <?php 
                                     foreach( $order_note as $key => $note )
-                                    {
+                                    { 
                                         if( $key == "amended" ) continue;
+                                        if( $key == "customer_contact" ) continue;
+                                        if( $key == "boxoffice" ) continue;
                                         $terms  = get_the_terms($note['product_id'], 'product_cat'); 
                                         $term   = reset($terms); 
                                         ?>
@@ -139,17 +141,20 @@ function upv_ticket_admin()
                                         <td>Total:</td>
                                         <td>&dollar;<?php echo number_format($total, 2); ?></td>
                                     </tr>
+                                    <?php if( array_key_exists("boxoffice", $order_note) && $order_note['boxoffice'] ): ?>
+                                        <tr><td>Note: Payment to be made at Box Office</td></tr>
+                                    <?php endif; ?>
                                     <tr>
                                         <td>Customer Note:<br/><?php echo $customer_note; ?></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <label for="admin_order_note">Accessibility notes (if applicable):</label><br>
                                             <textarea name="admin_order_note" style="width:100%;"><?php echo $admin_order_note; ?></textarea>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <label for="admin_customer_note">Customer Note (Admin):</label><br>
                                             <textarea name="admin_customer_note" style="width:100%;"><?php echo $admin_customer_note; ?></textarea>
                                         </td>
