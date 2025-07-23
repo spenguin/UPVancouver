@@ -297,7 +297,7 @@ function upv_ticket_admin()
                         'name'      => $userName,
                         'phone'     => $phone
                     ];
-                }
+                } 
                 set_order_note( $orderId, $order_note );
 
                 $payment_status = $_POST['payment'] ? 'completed' : 'pending'; 
@@ -306,14 +306,14 @@ function upv_ticket_admin()
                 $order->add_order_note( '[ta]' . $admin_order_note );
 
                 // Add order to Performance
-                $tickets_sold = get_post_meta( $performance->ID, 'tickets_sold', TRUE ); 
+                $tickets_sold = get_post_meta( $performance->ID, 'tickets_sold', TRUE );
                 if( empty($tickets_sold) )
                 {
                     $tickets_sold           = [];
                     $tickets_sold['count']  = 0;
                 } 
                 $tickets_sold['count']  += $ordered_count;
-                $tickets_sold[$orderId] = $tickets_ordered; 
+                $tickets_sold[$orderId] = $tickets_ordered;
                 update_post_meta( $performance->ID, 'tickets_sold', $tickets_sold );
                 $_POST = [];
 
