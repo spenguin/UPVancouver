@@ -45,7 +45,7 @@ function array_csv_download( $performance, $filename = "export.csv" )
 
     foreach ( $tickets_sold as $order_id => $stuff ) {
         if( $order_id == "count" ) continue;
-        $value  = array_fill(0, 10, 0 );
+        $value  = array_fill(0, 10, '' );
 
         $order_notes    = get_order_note($order_id); //pvd($order_notes);
 
