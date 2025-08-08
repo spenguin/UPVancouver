@@ -14,6 +14,10 @@ function upv_cart()
             $showTitle  = "Seasons Ticket";
             $showTime   = ""; 
             $performanceDate = "";
+            // Test for promo
+            $isTicketSpecialAvailable   = isTicketSpecialAvailable();
+            $seasonTicketsOrdered       = [];
+
         } else {
             $selectedPerformance    = get_post($selectedPerformanceId); 
             $performanceDate        = $selectedPerformance->post_title;
@@ -36,8 +40,32 @@ function upv_cart()
                 'misha_custom_price' => $t->charge,
                 'name'      => $t->name
             ];
+            if( $isTicketSpecialAvailable )
+            {
+                $array                  = array_fill( 0, $t->quantity, $t->charge );
+                $seasonTicketsOrdered   = array_merge( $seasonTicketsOrdered, $array );
+            }
             $_SESSION['cart'][] = $args;
         }
+        if( count( $seasonTicketsOrdered ) >= 3 )   // If there are fewer than three tickets ordered, the promo doesn't apply anyway
+        {
+            rsort($seasonTicketsOrdered);
+            $discountTotal = 0;
+            foreach( $seasonTicketsOrdered as $k => $s )
+            {
+                if( ($k+1)%3 == 0 )
+                {
+                    $discountTotal += $s/2;
+                }
+            }
+            $_SESSION['cart']['promoDiscount'] = [
+                'showTitle'             => 'Promotional Discount',
+                'quantity'              => 1,
+                'misha_custom_price'    => -1 * $discountTotal,
+                'name'                  => 'Promotional Discount'
+            ];
+        } 
+        
     }
 
     if( isset($_POST['donation']) ){
@@ -73,7 +101,7 @@ function upv_cart()
                 </thead>
                 <tbody>
                     <?php
-                        $orderTotal = 0;
+                        $orderTotal = 0; 
                         foreach($_SESSION['cart']  as $key => $args ) { 
                             if( $args['quantity'] == 0 ) continue;
                             $showCharge = $args['quantity'] * $args['misha_custom_price'];
@@ -81,24 +109,26 @@ function upv_cart()
                             ?>
                             <tr>
                                 <td>
-                                    <div class="shopping-cart__delete"><a href="/cart?del=<?php echo $key; ?>" >X</a></div>
+                                    <?php //if( $args['name'] != 'Promotional Discount' ): ?>
+                                        <div class="shopping-cart__delete"><a href="/cart?del=<?php echo $key; ?>" >X</a></div>
+                                    <?php //endif; ?>
                                     <div>
                                         <?php if( $args['name'] != 'Donation' ): ?>
                                             <?php echo $args['showTitle']; ?><br />
                                             <?php 
-                                                if( $args['showTitle'] != 'Seasons Ticket' )
+                                                if( isset($args['showTitle']) && $args['showTitle'] != 'Seasons Ticket' && $args['showTitle'] != 'Promotional Discount')
                                                 {
                                                     echo $args['date']  . ' '  . date("g:i a", strtotime($args['time'])) . '<br />';
                                                 } ?>
                                         <?php endif; ?>
-                                        <?php echo $args['name'] . ' &dollar;' . $args['misha_custom_price']; ?>
+                                        <?php echo $args['name'] . ($args['misha_custom_price'] < 0 ) ? '(&dollar;' . abs($args['misha_custom_price']) . ')' : ' &dollar;' . $args['misha_custom_price']; ?>
                                     </div>
                                 </td>
                                 <td>
                                     <?php echo $args['quantity']; ?>
                                 </td>
                                 <td>
-                                    &dollar;<?php echo $showCharge; ?>
+                                    <?php echo $showCharge < 0 ? '(&dollar;' . abs($showCharge) . ')' : '&dollar;' . $showCharge; ?>
                                 </td>
                             </tr>
                     <?php    } ?>

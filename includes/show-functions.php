@@ -101,8 +101,9 @@ function get_seasons($year)
 {
     global $wpdb;
 
+    $table = $wpdb->prefix . "terms";
     $sql = $wpdb->prepare(
-        "SELECT * FROM `wpba_terms` WHERE `slug` LIKE %s",
+        "SELECT * FROM $table WHERE `slug` LIKE %s",
         ['%' . $year . '%']
     );
     return $wpdb->get_results( $sql , ARRAY_A ); 
