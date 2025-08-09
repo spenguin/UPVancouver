@@ -39,18 +39,18 @@ defined( 'ABSPATH' ) || exit;
                         <?php if( $args['name'] != 'Donation' ): ?>
                             <?php echo $args['showTitle']; ?><br />
                             <?php 
-                                if( $args['showTitle'] != 'Seasons Ticket' )
+                                if( $args['showTitle'] != 'Seasons Ticket' && $args['showTitle'] != 'Promotional Discount')
                                 {
                                     echo $args['date']  . ' '  . date("g:i a", strtotime($args['time'])) . '<br />';
                                 } ?>
                         <?php endif; ?>
-                        <?php echo $args['name'] . ' &dollar;' . $args['misha_custom_price']; ?>
+                        <?php echo $args['name'] . ($args['misha_custom_price'] < 0 ) ? '(&dollar;' . abs($args['misha_custom_price']) . ')' : ' &dollar;' . $args['misha_custom_price']; ?>
                     </td>
                     <td>
                         <?php echo $args['quantity']; ?>
                     </td>
                     <td>
-                        &dollar;<?php echo $showCharge; ?>      
+                        <?php echo $showCharge < 0 ? '(&dollar;' . abs($showCharge) . ')' : '&dollar;' . $showCharge; ?>      
                     </td>
                 </tr>
 

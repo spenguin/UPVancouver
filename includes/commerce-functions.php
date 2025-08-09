@@ -64,6 +64,22 @@ function getDonationProduct()
     wp_reset_postdata();
 }
 
+function getPromoProduct()
+{
+        $args   = [
+        'post_type'         => 'product',
+        'title'             => 'Promotional Discount',
+        'posts_per_page'    => 1
+    ];
+
+    $query = new WP_Query($args); 
+    if( $query->have_posts()): $query->the_post();
+        return get_the_ID();
+    endif;
+    return NULL;
+    wp_reset_postdata();
+}
+
 /**
  * Override product price on the fly
  * Based on: https://rudrastyh.com/woocommerce/add-product-to-cart-programmatically.html

@@ -59,6 +59,7 @@ function upv_cart()
                 }
             }
             $_SESSION['cart']['promoDiscount'] = [
+                'product_id'            => getPromoProduct(),
                 'showTitle'             => 'Promotional Discount',
                 'quantity'              => 1,
                 'misha_custom_price'    => -1 * $discountTotal,
