@@ -209,7 +209,7 @@ function render_order_details($notes)
                 <?php if( $args['name'] != 'Donation' ): ?>
                     <?php echo $args['showTitle']; ?><br />
                     <?php 
-                        if( $args['showTitle'] != 'Seasons Ticket' )
+                        if( $args['showTitle'] != 'Seasons Ticket' && $args['showTitle'] != 'Promotional Discount' )
                         {
                             $products_ordered[] = ( 0 == $args['misha_custom_price'] ) ? "Subscriber" : "Show";
                             echo $args['date']  . ' '  . date("g:i a", strtotime($args['time'])) . '<br />';
@@ -221,13 +221,13 @@ function render_order_details($notes)
                 <?php else:
                     $products_ordered[] = "Donation";
                 endif; ?>
-                <?php echo $args['name'] . ' $' . $args['misha_custom_price']; ?>
+                <?php echo $args['name'] . ($args['misha_custom_price'] < 0 ) ? '($' . abs($args['misha_custom_price']) . ')' : ' $' . $args['misha_custom_price']; ?>
             </td>
             <td>
                 <?php echo $args['quantity']; ?>
             </td>
             <td>
-                $<?php echo $showCharge; ?>
+                <?php echo $showCharge < 0 ? '($' . abs($showCharge) . ')' : '$' . $showCharge; ?>
             </td>
         </tr>   
         <?php     
